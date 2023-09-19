@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'SignUp.dart';
-import 'HomePage.dart';
 
-
-class LogInPage extends StatelessWidget{
+class SignUpPage extends StatelessWidget{
   Widget textField(@required String hintText,@required IconData icon){
     return TextFormField(
                   decoration:  InputDecoration(
@@ -32,6 +29,8 @@ class LogInPage extends StatelessWidget{
           ),
         ),
 
+          
+
         
       Container(
         margin: EdgeInsets.symmetric(horizontal: 50),
@@ -40,7 +39,7 @@ class LogInPage extends StatelessWidget{
           crossAxisAlignment: CrossAxisAlignment.center,
           children:<Widget> [
             textField(
-            '  Enter Your Mail',
+            '  Email',
               Icons.email_outlined
               ),
       
@@ -49,8 +48,23 @@ class LogInPage extends StatelessWidget{
               ),
       
             textField(
-            '  Enter Your Password',
-            Icons.lock_outline
+            '  Username',
+            Icons.person_2_outlined
+            ),
+             SizedBox(
+              height: 20,
+              ),
+            textField(
+            '  Password',
+            Icons.lock
+            ),
+            
+            SizedBox(
+            height: 20,
+            ),
+            textField(
+            '  Confirm Password',
+            Icons.lock
             )
       
           ],
@@ -62,13 +76,13 @@ class LogInPage extends StatelessWidget{
             ),
       ElevatedButton(
         onPressed: () {
-          Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
+
+          ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Sign Up Successful')));
+          Navigator.pop(context);
 
         },
-        child: Text('Log In'),
+        child: Text('Sign Up'),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.teal,
           shape: RoundedRectangleBorder(
@@ -76,41 +90,9 @@ class LogInPage extends StatelessWidget{
           ),
         ),
       ),
-      Container(
-        height: 200,
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text('Dont have an Account?',
-          style:TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontFamily: "Pacifico",
-          )
-          ),
-          GestureDetector(
-            onTap: () {
-              // Navigate to the SignUpPage when "Sign Up" text is tapped
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SignUpPage()),
-              );
-            },
-            child:Text('Sign Up',
-            style:TextStyle(
-              color: Colors.green,
-              fontSize: 20,
-              fontFamily: "Pacifico",
-              decoration: TextDecoration.underline,
-            )
-            ),
-          ),
-
-          
-        ],
-      ),
-      ),
-      
+      SizedBox(
+        height: 80,
+      )
     
       ]
 
