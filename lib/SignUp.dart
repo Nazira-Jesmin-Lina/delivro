@@ -59,7 +59,7 @@ class _SignUpPageState extends State<SignUpPage>{
         children:[ 
           Expanded(
           child: Container(
-            child: Image(image: AssetImage('Images/Delivro.png')),
+            child: Image(image: AssetImage('Images/Delivro_2.png')),
           ),
         ),
 
@@ -128,7 +128,7 @@ class _SignUpPageState extends State<SignUpPage>{
           },
           child: Text('Sign Up'),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 20, 50, 199),
+            backgroundColor: Color.fromARGB(255, 200, 15, 104),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30), // <-- Radius
             ),
