@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "282810117225",
+    "project_id": "delivro-8fe00",
+    "storage_bucket": "delivro-8fe00.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282810117225:android:a8cda9b082b1e4db99c6f8",
+        "android_client_info": {
+          "package_name": "com.example.delivro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUM_tOA1PxUm_g6niJUYQw5TrEqhQOAEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'TextField.dart';
@@ -10,7 +13,6 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage>{
-
   // String regExpPattern = SignUpPage.pattern;
   // RegExp regExp = RegExp(regExpPattern);
   TextEditingController Email= TextEditingController();
@@ -20,6 +22,23 @@ class _SignUpPageState extends State<SignUpPage>{
 
   final scaffoldMessengerKey=GlobalKey<ScaffoldMessengerState>();
 
+  Future sendData() async{
+   try {
+      final userCredential= await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: Email.text,
+      password: Password.text,
+    );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+       // scaffoldMessengerKey.currentState.showSnackBar(SnackBar(content: Text()))
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
   void validation(BuildContext context) {
     RegExp regExp = RegExp(
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
