@@ -22,7 +22,7 @@ class LogInPage extends StatelessWidget{
 
         
       Container(
-        margin: EdgeInsets.symmetric(horizontal: 50),
+        margin: EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,19 +52,22 @@ class LogInPage extends StatelessWidget{
       SizedBox(
             height: 50,
             ),
-      ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
-
-        },
-        child: Text('Log In'),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.teal,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30), // <-- Radius
+      SizedBox(
+        width: 100,
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+      
+          },
+          child: Text('Log In'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(255, 20, 50, 199),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30), // <-- Radius
+            ),
           ),
         ),
       ),

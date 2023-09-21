@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'TextField.dart';
 
-// class _SignUpPage extends StatefulWidget {
-//   static Pattern pattern =
-//       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-//   @override
-//   SignUpPageState createState() => SignUpPageState();
-// }
-
-class SignUpPage extends StatelessWidget{
-
+class SignUpPage extends StatefulWidget {
   static Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
 
+class _SignUpPageState extends State<SignUpPage>{
+
+  // String regExpPattern = SignUpPage.pattern;
+  // RegExp regExp = RegExp(regExpPattern);
   TextEditingController Email= TextEditingController();
   TextEditingController username= TextEditingController();
   TextEditingController Password =TextEditingController();
@@ -22,8 +21,16 @@ class SignUpPage extends StatelessWidget{
   final scaffoldMessengerKey=GlobalKey<ScaffoldMessengerState>();
 
   void validation(BuildContext context) {
-    if (Email.text.trim().isEmpty || Email.text.trim() == null) {
+    RegExp regExp = RegExp(
+    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+     );
+    if (Email.text.trim().isEmpty || Email.text.trim() == null ) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Email field is empty')));
+      return;
+    }
+
+    else if(!regExp.hasMatch(Email.text)){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please enter the valied email')));
       return;
     }
 
@@ -60,7 +67,7 @@ class SignUpPage extends StatelessWidget{
 
         
       Container(
-        margin: EdgeInsets.symmetric(horizontal: 50),
+        margin: EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,19 +116,22 @@ class SignUpPage extends StatelessWidget{
       SizedBox(
             height: 50,
             ),
-      ElevatedButton(
-        onPressed: () {
-          validation(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Sign Up Successful')));
-          Navigator.pop(context);
+      SizedBox(
+        width: 150,
+        child:ElevatedButton(
+          onPressed: () {
+            validation(context);
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //         const SnackBar(content: Text('Sign Up Successful')));
+            // Navigator.pop(context);
 
-        },
-        child: Text('Sign Up'),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.teal,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30), // <-- Radius
+          },
+          child: Text('Sign Up'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(255, 20, 50, 199),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30), // <-- Radius
+            ),
           ),
         ),
       ),

@@ -3,17 +3,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   return runApp(
-    MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "Delivro"
-          ),
-        ),
-      body: MyApp(),
-      ),
-    )
+    MyApp()
     
   );
 }
@@ -24,6 +14,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+      debugShowCheckedModeBanner: false,
+        title: 'Delivro',
+        theme: ThemeData(
+          scaffoldBackgroundColor:Colors.white,
+          appBarTheme: AppBarTheme(
+            color:Colors.white,
+          ),
+        ),
       home: WelcomePage(),
     );
   }
