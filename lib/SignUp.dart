@@ -1,26 +1,53 @@
 import 'package:flutter/material.dart';
 
+import 'TextField.dart';
+
+// class _SignUpPage extends StatefulWidget {
+//   static Pattern pattern =
+//       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+//   @override
+//   SignUpPageState createState() => SignUpPageState();
+// }
 
 class SignUpPage extends StatelessWidget{
-  Widget textField(@required String hintText,@required IconData icon){
-    return TextFormField(
-                  decoration:  InputDecoration(
-                    prefixIcon: Icon(icon),
-                    hintText: hintText,
-                    hintStyle: TextStyle(color: Colors.blueGrey,
-                    fontFamily: "Pacifico",
-                    ),
-                    errorBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
 
-                    ),
+  static Pattern pattern =
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
-                  ),
-                );
-               
-}
+  TextEditingController Email= TextEditingController();
+  TextEditingController username= TextEditingController();
+  TextEditingController Password =TextEditingController();
+  TextEditingController confirm_pass= TextEditingController();
+
+  final scaffoldMessengerKey=GlobalKey<ScaffoldMessengerState>();
+
+  void validation(BuildContext context) {
+    if (Email.text.trim().isEmpty || Email.text.trim() == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Email field is empty')));
+      return;
+    }
+
+    if (username.text.trim().isEmpty || username.text.trim() == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('username field is empty')));
+      return;
+    }
+
+    if (Password.text.trim().isEmpty || Password.text.trim() == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Password field is empty')));
+      return;
+    }
+
+    if (confirm_pass.text.trim().isEmpty || confirm_pass.text.trim() == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('confirm password field is empty')));
+      return;
+    }
+  }
+
+ 
   Widget build(BuildContext context){
+    
     return Scaffold(
+      key:scaffoldMessengerKey,
       body: Column(
         children:[ 
           Expanded(
@@ -38,33 +65,41 @@ class SignUpPage extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children:<Widget> [
-            textField(
+            MyTextField(
             '  Email',
-              Icons.email_outlined
+              Icons.email_outlined,
+              false,
+              Email,
               ),
       
               SizedBox(
               height: 20,
               ),
       
-            textField(
+            MyTextField(
             '  Username',
-            Icons.person_2_outlined
+            Icons.person_2_outlined,
+            false,
+            username,
             ),
              SizedBox(
               height: 20,
               ),
-            textField(
+            MyTextField(
             '  Password',
-            Icons.lock
+            Icons.lock,
+            true,
+            Password,
             ),
             
             SizedBox(
             height: 20,
             ),
-            textField(
+            MyTextField(
             '  Confirm Password',
-            Icons.lock
+            Icons.lock,
+            true,
+            confirm_pass,
             )
       
           ],
@@ -76,7 +111,7 @@ class SignUpPage extends StatelessWidget{
             ),
       ElevatedButton(
         onPressed: () {
-
+          validation(context);
           ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Sign Up Successful')));
           Navigator.pop(context);

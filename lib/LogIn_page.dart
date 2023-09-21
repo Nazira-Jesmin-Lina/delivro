@@ -1,27 +1,15 @@
-import 'package:flutter/material.dart';
+import 'dart:ffi';
 
+import 'package:delivro/TextField.dart';
+import 'package:flutter/material.dart';
+import 'TextField.dart';
 import 'SignUp.dart';
 import 'HomePage.dart';
 
 
 class LogInPage extends StatelessWidget{
-  Widget textField(@required String hintText,@required IconData icon){
-    return TextFormField(
-                  decoration:  InputDecoration(
-                    prefixIcon: Icon(icon),
-                    hintText: hintText,
-                    hintStyle: TextStyle(color: Colors.blueGrey,
-                    fontFamily: "Pacifico",
-                    ),
-                    errorBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
+  
 
-                    ),
-
-                  ),
-                );
-               
-}
   Widget build(BuildContext context){
     return Scaffold(
       body: Column(
@@ -39,18 +27,22 @@ class LogInPage extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children:<Widget> [
-            textField(
+            MyTextField(
             '  Enter Your Mail',
-              Icons.email_outlined
+              Icons.email_outlined,
+              false,
+              null
               ),
       
               SizedBox(
               height: 20,
               ),
       
-            textField(
+            MyTextField(
             '  Enter Your Password',
-            Icons.lock_outline
+            Icons.lock_outline,
+            true,
+            null,
             )
       
           ],
