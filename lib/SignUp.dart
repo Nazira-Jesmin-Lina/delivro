@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'TextField.dart';
 
@@ -16,7 +19,7 @@ class _SignUpPageState extends State<SignUpPage>{
   // String regExpPattern = SignUpPage.pattern;
   // RegExp regExp = RegExp(regExpPattern);
   TextEditingController Email= TextEditingController();
-  TextEditingController username= TextEditingController();
+  TextEditingController Name= TextEditingController();
   TextEditingController Password =TextEditingController();
   TextEditingController confirm_pass= TextEditingController();
 
@@ -24,19 +27,30 @@ class _SignUpPageState extends State<SignUpPage>{
 
   Future sendData() async{
    try {
-      final userCredential= await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: Email.text,
-      password: Password.text,
-    );
+        final userCredential= await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: Email.text,password: Password.text );
+        FirebaseFirestore.instance.collection('userData').doc(userCredential.user!.uid).set({
+          'email': Email.text.trim(),
+          'name': Name.text.trim(),
+          'password': Password.text.trim(),
+          'userID': userCredential.user!.uid
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Account successfully Created ')));
+
+      
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-       // scaffoldMessengerKey.currentState.showSnackBar(SnackBar(content: Text()))
-        print('The password provided is too weak.');
+        
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('The password provided is too weak.')));
+        // print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('TThe account already exists for that email.')));
+
+       // print('The account already exists for that email.');
       }
     } catch (e) {
-      print(e);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+
     }
   }
   void validation(BuildContext context) {
@@ -53,8 +67,8 @@ class _SignUpPageState extends State<SignUpPage>{
       return;
     }
 
-    if (username.text.trim().isEmpty || username.text.trim() == null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('username field is empty')));
+    if (Name.text.trim().isEmpty || Name.text.trim() == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Name field is empty')));
       return;
     }
 
@@ -66,6 +80,9 @@ class _SignUpPageState extends State<SignUpPage>{
     if (confirm_pass.text.trim().isEmpty || confirm_pass.text.trim() == null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('confirm password field is empty')));
       return;
+    }
+    else{
+      sendData();
     }
   }
 
@@ -103,10 +120,10 @@ class _SignUpPageState extends State<SignUpPage>{
               ),
       
             MyTextField(
-            '  Username',
+            '  Name',
             Icons.person_2_outlined,
             false,
-            username,
+            Name,
             ),
              SizedBox(
               height: 20,
