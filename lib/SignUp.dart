@@ -45,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage>{
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('The password provided is too weak.')));
         // print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('TThe account already exists for that email.')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('The account already exists for that email.')));
 
        // print('The account already exists for that email.');
       }
@@ -163,24 +163,29 @@ class _SignUpPageState extends State<SignUpPage>{
       SizedBox(
             height: 50,
             ),
-      SizedBox(
-        width: 150,
-        child:ElevatedButton(
-          onPressed: () {
-            validation(context);
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //         const SnackBar(content: Text('Sign Up Successful')));
-            // Navigator.pop(context);
+      loading?CircularProgressIndicator() : Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 150,
+            child:ElevatedButton(
+              onPressed: () {
+                validation(context);
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //         const SnackBar(content: Text('Sign Up Successful')));
+                // Navigator.pop(context);
 
-          },
-          child: Text('Sign Up'),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 200, 15, 104),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30), // <-- Radius
+              },
+              child: Text('Sign Up'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 200, 15, 104),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30), // <-- Radius
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
       SizedBox(
         height: 80,

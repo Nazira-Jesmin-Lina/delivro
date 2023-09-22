@@ -28,18 +28,29 @@ class _LogInPageState extends State<LogInPage> {
   Future loginAuth() async{
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email.text.trim(),
-        password: password.text.trim()
+        email: email.text,
+        password: password.text
       );
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login Successfull')));
-
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login Successfull')));
+      Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
     } on FirebaseAuthException catch (e) {
+      print('hhhhhhhh');
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No user found for that email.')));
 
       } else if (e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Wrong password provided for that user.')));
       }
+      else
+      {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Credentials.')));
+      }
+      setState(() {
+        loading=false;
+      });
     }
 
   }
@@ -64,9 +75,10 @@ class _LogInPageState extends State<LogInPage> {
       return;
     } else {
       setState(() {
-        loadding = true;
+        loading = true;
       });
       loginAuth();
+
     }
   }
   Widget build(BuildContext context){
@@ -90,7 +102,7 @@ class _LogInPageState extends State<LogInPage> {
             '  Enter Your Mail',
               Icons.email_outlined,
               false,
-              password,
+              email,
               ),
       
               SizedBox(
@@ -101,7 +113,7 @@ class _LogInPageState extends State<LogInPage> {
             '  Enter Your Password',
             Icons.lock_outline,
             true,
-            email,
+            password,
             )
       
           ],
@@ -111,25 +123,30 @@ class _LogInPageState extends State<LogInPage> {
       SizedBox(
             height: 50,
             ),
-      SizedBox(
-        width: 100,
-        child: ElevatedButton(
-          onPressed: () {
-          //   Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => HomePage()),
-          // );
-            validation();
-      
-          },
-          child: Text('Log In'),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 200, 15, 104),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30), // <-- Radius
+      loading?CircularProgressIndicator():Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 100,
+            child: ElevatedButton(
+              onPressed: () {
+              //   Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => HomePage()),
+              // );
+                validation();
+          
+              },
+              child: Text('Log In'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 200, 15, 104),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30), // <-- Radius
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
       Container(
         height: 200,
