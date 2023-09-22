@@ -18,6 +18,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage>{
   // String regExpPattern = SignUpPage.pattern;
   // RegExp regExp = RegExp(regExpPattern);
+  bool loading=false;
   TextEditingController Email= TextEditingController();
   TextEditingController Name= TextEditingController();
   TextEditingController Password =TextEditingController();
@@ -50,8 +51,15 @@ class _SignUpPageState extends State<SignUpPage>{
       }
     } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+        setState(() {
+        loading=false;
+      });
 
     }
+    setState(() {
+        loading=false;
+      });
+
   }
   void validation(BuildContext context) {
     RegExp regExp = RegExp(
@@ -82,6 +90,9 @@ class _SignUpPageState extends State<SignUpPage>{
       return;
     }
     else{
+      setState(() {
+        loading=true;
+      });
       sendData();
     }
   }
