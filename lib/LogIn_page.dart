@@ -87,11 +87,18 @@ class _LogInPageState extends State<LogInPage> {
         children:[ 
           Expanded(
           child: Container(
-            child: Image(image: AssetImage('Images/Delivro_3.png')),
+            child: Image(image: AssetImage('Images/delivery_bro.png')),
           ),
         ),
-
-        
+      Text('Delivro',
+        style: TextStyle(color: Color.fromARGB(255, 200, 15, 104),
+        fontFamily: 'Pacifico',
+        fontSize: 40,
+        ),
+      ),
+      SizedBox(
+            height: 30,
+            ),
       Container(
         margin: EdgeInsets.symmetric(horizontal: 10),
         child: Column(
@@ -121,7 +128,7 @@ class _LogInPageState extends State<LogInPage> {
         ),
       ),
       SizedBox(
-            height: 50,
+            height: 30,
             ),
       loading?CircularProgressIndicator():Row(
         mainAxisAlignment: MainAxisAlignment.center,

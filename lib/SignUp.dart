@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -102,97 +103,108 @@ class _SignUpPageState extends State<SignUpPage>{
     
     return Scaffold(
       key:scaffoldMessengerKey,
-      body: Column(
-        children:[ 
-          Expanded(
-          child: Container(
-            child: Image(image: AssetImage('Images/Delivro_2.png')),
+      body: SingleChildScrollView(
+        //dragStartBehavior: DragStartBehavior.start,
+        child: Column(
+          children:[ 
+            
+           Container(
+            height: 200,
+            child: Image(image: AssetImage('Images/delivery_bro.png')),
+          ),
+          
+      
+          Text('Delivro',
+          style: TextStyle(color: Color.fromARGB(255, 200, 15, 104),
+          fontFamily: 'Pacifico',
+          fontSize: 40,
           ),
         ),
-
+        SizedBox(
+              height: 30,
+              ),     
           
-
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:<Widget> [
+              MyTextField(
+              '  Email',
+                Icons.email_outlined,
+                false,
+                Email,
+                ),
         
-      Container(
-        margin: EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children:<Widget> [
-            MyTextField(
-            '  Email',
-              Icons.email_outlined,
+                SizedBox(
+                height: 20,
+                ),
+        
+              MyTextField(
+              '  Name',
+              Icons.person_2_outlined,
               false,
-              Email,
+              Name,
               ),
-      
+               SizedBox(
+                height: 20,
+                ),
+              MyTextField(
+              '  Password',
+              Icons.lock,
+              true,
+              Password,
+              ),
+              
               SizedBox(
               height: 20,
               ),
-      
-            MyTextField(
-            '  Name',
-            Icons.person_2_outlined,
-            false,
-            Name,
-            ),
-             SizedBox(
-              height: 20,
-              ),
-            MyTextField(
-            '  Password',
-            Icons.lock,
-            true,
-            Password,
-            ),
-            
-            SizedBox(
-            height: 20,
-            ),
-            MyTextField(
-            '  Confirm Password',
-            Icons.lock,
-            true,
-            confirm_pass,
-            )
-      
-          ],
+              MyTextField(
+              '  Confirm Password',
+              Icons.lock,
+              true,
+              confirm_pass,
+              )
         
+            ],
+          
+          ),
         ),
-      ),
-      SizedBox(
-            height: 50,
-            ),
-      loading?CircularProgressIndicator() : Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 150,
-            child:ElevatedButton(
-              onPressed: () {
-                validation(context);
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //         const SnackBar(content: Text('Sign Up Successful')));
-                // Navigator.pop(context);
-
-              },
-              child: Text('Sign Up'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 200, 15, 104),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30), // <-- Radius
+        SizedBox(
+              height: 50,
+              ),
+        loading?CircularProgressIndicator() : Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 150,
+              child:ElevatedButton(
+                onPressed: () {
+                  validation(context);
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //         const SnackBar(content: Text('Sign Up Successful')));
+                  // Navigator.pop(context);
+      
+                },
+                child: Text('Sign Up'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 200, 15, 104),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30), // <-- Radius
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      SizedBox(
-        height: 80,
-      )
-    
-      ]
-
+          ],
+        ),
+        SizedBox(
+          height: 80,
+        )
+          
+        ]
+      
+        ),
       ),
 
     );
