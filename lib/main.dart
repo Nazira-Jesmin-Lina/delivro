@@ -1,4 +1,4 @@
-import 'package:delivro/Welcome_page.dart';
+import 'package:delivro/Pages/Welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

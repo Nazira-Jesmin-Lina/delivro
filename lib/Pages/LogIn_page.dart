@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:delivro/TextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'TextField.dart';
+import '../TextField.dart';
 import 'SignUp.dart';
 import 'HomePage.dart';
 

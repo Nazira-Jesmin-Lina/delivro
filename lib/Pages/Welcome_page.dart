@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:delivro/LogIn_page.dart';
+import 'package:delivro/Pages/LogIn_page.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
