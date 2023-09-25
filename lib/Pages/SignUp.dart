@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivro/Pages/LogIn_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
@@ -37,8 +38,11 @@ class _SignUpPageState extends State<SignUpPage>{
           'password': Password.text.trim(),
           'userID': userCredential.user!.uid
         });
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Account successfully Created ')));
-
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Account successfully Created, Please Log in to continue. ')));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LogInPage()),
+          );
       
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
