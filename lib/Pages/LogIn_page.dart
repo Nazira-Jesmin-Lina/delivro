@@ -83,116 +83,153 @@ class _LogInPageState extends State<LogInPage> {
   }
   Widget build(BuildContext context){
     return Scaffold(
-      body: Column(
-        children:[ 
-          Expanded(
-          child: Container(
+      body: SingleChildScrollView(
+        child: Column(
+          children:[ 
+          Container(
+            height: 250,
             child: Image(image: AssetImage('Images/delivery_bro.png')),
+            ),
+          
+        Text('Delivro',
+          style: TextStyle(color: Color.fromARGB(255, 200, 15, 104),
+          fontFamily: 'Pacifico',
+          fontSize: 40,
           ),
         ),
-      Text('Delivro',
-        style: TextStyle(color: Color.fromARGB(255, 200, 15, 104),
-        fontFamily: 'Pacifico',
-        fontSize: 40,
-        ),
-      ),
-      SizedBox(
-            height: 30,
-            ),
-      Container(
-        margin: EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children:<Widget> [
-            MyTextField(
-            '  Enter Your Mail',
-              Icons.email_outlined,
-              false,
-              email,
+        SizedBox(
+              height: 30,
               ),
-      
-              SizedBox(
-              height: 20,
-              ),
-      
-            MyTextField(
-            '  Enter Your Password',
-            Icons.lock_outline,
-            true,
-            password,
-            )
-      
-          ],
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:<Widget> [
+              MyTextField(
+              '  Enter Your Mail',
+                Icons.email_outlined,
+                false,
+                email,
+                ),
         
-        ),
-      ),
-      SizedBox(
-            height: 30,
-            ),
-      loading?CircularProgressIndicator():Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 100,
-            child: ElevatedButton(
-              onPressed: () {
-              //   Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => HomePage()),
-              // );
-                validation();
+                SizedBox(
+                height: 20,
+                ),
+        
+              MyTextField(
+              '  Enter Your Password',
+              Icons.lock_outline,
+              true,
+              password,
+              )
+        
+            ],
           
-              },
-              child: Text('Log In'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 200, 15, 104),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30), // <-- Radius
+          ),
+        ),
+        SizedBox(
+              height: 5,
+              ),
+        Container(
+          height: 50,
+          child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            // GestureDetector(
+            //   onTap: () {
+            //     // Navigate to the SignUpPage when "Sign Up" text is tapped
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => SignUpPage()),
+            //     );
+            //   },
+             
+            // ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Text(
+                'Forget Password?',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 200, 15, 104),
+                  fontSize: 20,
+                  fontFamily: "Pacifico",
+                  decoration: TextDecoration.underline,
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      Container(
-        height: 200,
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text('Dont have an Account?',
-          style:TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontFamily: "Pacifico",
-          )
-          ),
-          GestureDetector(
-            onTap: () {
-              // Navigate to the SignUpPage when "Sign Up" text is tapped
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SignUpPage()),
-              );
-            },
-            child:Text('Sign Up',
+      
+            
+          ],
+        ),
+        ),
+        SizedBox(
+              height: 20,
+              ),
+        loading?CircularProgressIndicator():Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 100,
+              child: ElevatedButton(
+                onPressed: () {
+                //   Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => HomePage()),
+                // );
+                  validation();
+            
+                },
+                child: Text('Log In'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 200, 15, 104),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30), // <-- Radius
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Container(
+          height: 200,
+          child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Dont have an Account?',
             style:TextStyle(
-              color: Colors.green,
+              color: Colors.black,
               fontSize: 20,
               fontFamily: "Pacifico",
-              decoration: TextDecoration.underline,
             )
             ),
-          ),
-
-          
-        ],
-      ),
-      ),
+            GestureDetector(
+              onTap: () {
+                // Navigate to the SignUpPage when "Sign Up" text is tapped
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUpPage()),
+                );
+              },
+              child:Text('Sign Up',
+              style:TextStyle(
+                color: Colors.green,
+                fontSize: 20,
+                fontFamily: "Pacifico",
+                decoration: TextDecoration.underline,
+              )
+              ),
+            ),
       
-    
-      ]
-
+            
+          ],
+        ),
+        ),
+        
+          
+        ]
+      
+        ),
       ),
 
     );
