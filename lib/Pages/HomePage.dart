@@ -1,4 +1,7 @@
+import 'package:delivro/Provider/myProvider.dart';
+import 'package:delivro/modles/categories_modle.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'SignUp.dart';
 class HomePage extends StatefulWidget {
@@ -9,14 +12,25 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>{
 
+  List<CategoriesModle> AllList=[];
+  List<CategoriesModle> PizzaList=[];
+  List<CategoriesModle> BurgerList=[];
+  List<CategoriesModle> SetMenuList=[];
+  List<CategoriesModle> PastaList=[];
+  List<CategoriesModle> AppetizerList=[];
+  List<CategoriesModle> DessertList=[];
+  List<CategoriesModle> DrinksList=[];
+
   Widget BottomContainer(@required String image,@required String name,@required int price){
     return Container(
+            
             height: 250,
             width: 200,
-            margin: EdgeInsets.only(top: 2),
+            margin: EdgeInsets.only(top: 4,left: 2,right: 2),
+            padding: EdgeInsets.only(top: 2),
             decoration: BoxDecoration(
               color: Color.fromARGB(255, 237, 234, 234),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
               boxShadow: [
                     BoxShadow(
                       color: Color.fromARGB(255, 95, 113, 187),
@@ -40,7 +54,7 @@ class _HomePageState extends State<HomePage>{
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircleAvatar(
-                  radius: 70,
+                  radius: 60,
                   backgroundImage: AssetImage(image),
                 ),
                 ListTile(
@@ -57,7 +71,7 @@ class _HomePageState extends State<HomePage>{
                       '$price BDT',
                       style: TextStyle(
                          color: Colors.black,
-                         fontSize: 20,
+                         fontSize: 16,
                          fontFamily: "Pacifico",
                       ),
                     ),
@@ -105,12 +119,14 @@ class _HomePageState extends State<HomePage>{
     return Column(
             children: [
               Container(
-                margin: EdgeInsets.only(left: 20),
+              
+               margin: EdgeInsets.only(left: 20,top: 20),
                 height: 70,
                 width: 70,
                 decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage(image)),
-                  color: Colors.red,
+                  
+                  image: DecorationImage(image: NetworkImage(image)),
+                  // color: Colors.red,
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
@@ -135,10 +151,94 @@ class _HomePageState extends State<HomePage>{
               SizedBox(
                 height: 10,
               ),
-              Text(name),
+              Text(
+                name,
+                // textAlign: TextAlign.center,
+                ),
             ],
           );
   }
+
+
+
+   Widget All(){
+    return Row(
+      children: AllList.map((e) => CategoriesContainer(
+        e.image, 
+        e.name
+        )).toList(),
+    );
+  }
+
+  Widget Pizza(){
+    return Row(
+      children: PizzaList.map((e) => CategoriesContainer(
+        e.image, 
+        e.name
+        )).toList(),
+    );
+  }
+
+
+   Widget Burger(){
+    return Row(
+      children: BurgerList.map((e) => CategoriesContainer(
+        e.image, 
+        e.name
+        )).toList(),
+    );
+  }
+
+  Widget SetMenu(){
+    return Row(
+      children: SetMenuList.map((e) => CategoriesContainer(
+        e.image, 
+        e.name
+        )).toList(),
+    );
+  }
+
+
+
+ Widget Pasta(){
+    return Row(
+      children: PastaList.map((e) => CategoriesContainer(
+        e.image, 
+        e.name
+        )).toList(),
+    );
+  }
+
+  Widget Appetizer(){
+    return Row(
+      children: AppetizerList.map((e) => CategoriesContainer(
+        e.image, 
+        e.name
+        )).toList(),
+    );
+  }
+
+
+   Widget Dessert(){
+    return Row(
+      children: DessertList.map((e) => CategoriesContainer(
+        e.image, 
+        e.name
+        )).toList(),
+    );
+  }
+
+  Widget Drinks(){
+    return Row(
+      children: DrinksList.map((e) => CategoriesContainer(
+        e.image, 
+        e.name
+        )).toList(),
+    );
+  }
+
+
+
 
 
   Widget drawerItem(@required String name,@required IconData icon){
@@ -156,6 +256,33 @@ class _HomePageState extends State<HomePage>{
   }
   
   Widget build(BuildContext context){
+    MyProvider provider=Provider.of<MyProvider>(context);
+    //1st//
+    provider.getCategories();
+    AllList = provider.throwList;
+    //2nd//
+    provider.getPizzaCategory();
+    PizzaList= provider.throwPizzaList;
+    //3rd//
+    provider.getBurgerCategory();
+    BurgerList= provider.throwBurgerList;
+    //4th//
+    provider.getPastaCategory();
+    PastaList= provider.throwPastaList;
+    //5th//
+    provider.getSetMenuCategory();
+    SetMenuList= provider.throwSetMenuList;
+    //6th//
+    provider.getAppetizerCategory();
+    AppetizerList= provider.throwAppetizerList;
+    //7th//
+    provider.getDessertCategory();
+    DessertList= provider.throwDessertList;
+    //8th//
+    provider.getDrinksCategory();
+    DrinksList= provider.throwDrinksList;
+
+
     return Scaffold(
       drawer: Drawer(
         child: SafeArea(
@@ -236,6 +363,8 @@ class _HomePageState extends State<HomePage>{
             );
           },
         ),
+
+
         actions: [
           Padding(
             padding: EdgeInsets.all(9.0),
@@ -246,6 +375,9 @@ class _HomePageState extends State<HomePage>{
          
         ],
       ),
+
+
+
       body: Container(
         margin: EdgeInsets.symmetric(horizontal:10),
         child: Column(
@@ -270,54 +402,70 @@ class _HomePageState extends State<HomePage>{
               ),
             ),
       
+
+
+
              SizedBox(
                   height: 10,
                 ),
+
+
+
+
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  CategoriesContainer(
-                   'Images/all_1.png',
-                   'All',
-                   ),
+
+                  All(),
+                  Pizza(),
+                  Burger(),
+                  Pasta(),
+                  SetMenu(),
+                  Appetizer(),
+                  Dessert(),
+                  Drinks(),
+                  // CategoriesContainer(
+                  //  'Images/all_1.png',
+                  //  'All',
+                  //  ),
                   
-                  CategoriesContainer(
-                   'Images/pizza_2.jpg',
-                   'Pizza',
-                   ),
+                  // CategoriesContainer(
+                  //  'Images/pizza_2.jpg',
+                  //  'Pizza',
+                  //  ),
                   
-                  CategoriesContainer(
-                   'Images/burger_1.jpg',
-                   'Burger',
-                   ),
+                  // CategoriesContainer(
+                  //  'Images/burger_1.jpg',
+                  //  'Burger',
+                  //  ),
                   
-                  CategoriesContainer(
-                   'Images/pasta_1jpg.jpg',
-                   'Pasta',
-                   ),
+                  // CategoriesContainer(
+                  //  'Images/pasta_1jpg.jpg',
+                  //  'Pasta',
+                  //  ),
                   
-                  CategoriesContainer(
-                   'Images/setmenu_2.jpg',
-                   'Set menu',
-                   ),
+                  // CategoriesContainer(
+                  //  'Images/setmenu_2.jpg',
+                  //  'Set menu',
+                  //  ),
                   
-                  CategoriesContainer(
-                   'Images/dessert_1.jpg',
-                   'Dessert',
-                   ),
+                  // CategoriesContainer(
+                  //  'Images/dessert_1.jpg',
+                  //  'Dessert',
+                  //  ),
                   
       
-                  CategoriesContainer(
-                   'Images/sides_2jpeg.jpeg',
-                   'Appetizer',
-                   ),
+                  // CategoriesContainer(
+                  //  'Images/sides_2jpeg.jpeg',
+                  //  'Appetizer',
+                  //  ),
                   
       
-                  CategoriesContainer(
-                  'Images/Juice_1.png',
-                  'Juice',
-                  ),
+                  // CategoriesContainer(
+                  // 'Images/Juice_1.png',
+                  // 'Juice',
+                  // ),
                   
                 ],
               ),

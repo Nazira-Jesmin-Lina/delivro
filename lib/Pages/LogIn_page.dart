@@ -149,7 +149,7 @@ class _LogInPageState extends State<LogInPage> {
             Align(
               alignment: Alignment.topRight,
               child: Text(
-                'Forget Password?',
+                'Forget Password?  ',
                 style: TextStyle(
                   color: Color.fromARGB(255, 200, 15, 104),
                   fontSize: 20,
