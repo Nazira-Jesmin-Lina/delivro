@@ -1,3 +1,4 @@
+import 'package:delivro/Pages/HomePage.dart';
 import 'package:delivro/Pages/Welcome_page.dart';
 import 'package:delivro/Pages/detailPage.dart';
 import 'package:delivro/Provider/myProvider.dart';
@@ -38,7 +39,8 @@ class MyApp extends StatelessWidget {
           ),
           // theme: lightTheme,
           // darkTheme: darkTheme,
-        home: WelcomePage(),
+        //home: WelcomePage(),
+        home: HomePage(),
       ),
     );
   }

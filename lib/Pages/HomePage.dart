@@ -1,5 +1,9 @@
+import 'package:delivro/Pages/categories.dart';
+import 'package:delivro/Pages/widget/bottom_container.dart';
 import 'package:delivro/Provider/myProvider.dart';
 import 'package:delivro/modles/categories_modle.dart';
+import 'package:delivro/modles/food_categories_modle.dart';
+import 'package:delivro/modles/food_modle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,130 +25,69 @@ class _HomePageState extends State<HomePage>{
   List<CategoriesModle> DessertList=[];
   List<CategoriesModle> DrinksList=[];
 
-  Widget BottomContainer(@required String image,@required String name,@required int price){
-    return Container(
-            
-            height: 250,
-            width: 200,
-            margin: EdgeInsets.only(top: 4,left: 2,right: 2),
-            padding: EdgeInsets.only(top: 2),
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 237, 234, 234),
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                    BoxShadow(
-                      color: Color.fromARGB(255, 95, 113, 187),
-                      offset: const Offset(
-                        0.0,
-                        0.0,
-                      ),
-                      blurRadius: 10.0,
-                      spreadRadius: 2.0,
-                    ), //BoxShadow
-                    BoxShadow(
-                      color: Colors.white,
-                      offset: const Offset(0.0, 0.0),
-                      blurRadius: 0.0,
-                      spreadRadius: 0.0,
-                    ), //BoxShadow
-                  ],
-            ),
+  ///single food item//
+  List<FoodModle> singleFoodList=[];
 
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage(image),
-                ),
-                ListTile(
-                  leading: Text(
-                      name,
-                      style: TextStyle(
-                         color: Colors.black,
-                         fontSize: 20,
-                         fontFamily: "Pacifico",
-                      ),
-                    ),
-                  
-                  trailing: Text(
-                      '$price BDT',
-                      style: TextStyle(
-                         color: Colors.black,
-                         fontSize: 16,
-                         fontFamily: "Pacifico",
-                      ),
-                    ),
-                ),
-              Padding(
-                padding: const EdgeInsets.only(left: 12),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.star,
-                      size: 20,
-                      color: Colors.black,
-                      ),
-                    Icon(
-                      Icons.star,
-                      size: 20,
-                      color: Colors.black,
-                      ),
-                    Icon(
-                      Icons.star,
-                      size: 20,
-                      color: Colors.black,
-                      ),
-                    Icon(
-                      Icons.star,
-                      size: 20,
-                      color: Colors.black,
-                      ),
-                    Icon(
-                      Icons.star,
-                      size: 20,
-                      color: Colors.black,
-                      ),
-                  ],
-                ),
-              ),
-            ],
-            ),
-          );
-  }
+  List<FoodCategoriesModle> burgerCategoriesList=[];
+
+  List<FoodCategoriesModle> PizzaCategoriesList=[];
+
+  List<FoodCategoriesModle> PastaCategoriesList=[];
+
+  List<FoodCategoriesModle> SetMenuCategoriesList=[];
+
+  List<FoodCategoriesModle> AppetizerCategoriesList=[];
+
+  List<FoodCategoriesModle> DessertCategoriesList=[];
+
+  List<FoodCategoriesModle> DrinksCategoriesList=[];
+
+  List<FoodCategoriesModle> AllCategoriesList=[];
+
+
+  
 
 
 
-  Widget CategoriesContainer(@required String image,@required String name){
+  Widget CategoriesContainer(
+    @required Function ontap,
+    @required String image,
+    @required String name){
     return Column(
             children: [
-              Container(
-              
-               margin: EdgeInsets.only(left: 20,top: 20),
-                height: 70,
-                width: 70,
-                decoration: BoxDecoration(
-                  
-                  image: DecorationImage(image: NetworkImage(image)),
-                  // color: Colors.red,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromARGB(255, 95, 113, 187),
-                      offset: const Offset(
-                        5.0,
-                        5.0,
-                      ),
-                      blurRadius: 10.0,
-                      spreadRadius: 2.0,
-                    ), //BoxShadow
-                    BoxShadow(
-                      color: Colors.white,
-                      offset: const Offset(0.0, 0.0),
-                      blurRadius: 0.0,
-                      spreadRadius: 0.0,
-                    ), //BoxShadow
-                  ],
+              GestureDetector(
+                onTap: (){
+                  ontap();
+                  print("hihihi");
+                },
+                child: Container(
+                
+                 margin: EdgeInsets.only(left: 20,top: 20),
+                  height: 70,
+                  width: 70,
+                  decoration: BoxDecoration(
+                    
+                    image: DecorationImage(image: NetworkImage(image)),
+                    // color: Colors.red,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 95, 113, 187),
+                        offset: const Offset(
+                          5.0,
+                          5.0,
+                        ),
+                        blurRadius: 10.0,
+                        spreadRadius: 2.0,
+                      ), //BoxShadow
+                      BoxShadow(
+                        color: Colors.white,
+                        offset: const Offset(0.0, 0.0),
+                        blurRadius: 0.0,
+                        spreadRadius: 0.0,
+                      ), //BoxShadow
+                    ],
+                  ),
                 ),
               ),
 
@@ -164,6 +107,17 @@ class _HomePageState extends State<HomePage>{
    Widget All(){
     return Row(
       children: AllList.map((e) => CategoriesContainer(
+        (){
+           Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Categories(
+                      list: AllCategoriesList,
+
+                    ),
+                  ),
+                );
+        },
         e.image, 
         e.name
         )).toList(),
@@ -173,6 +127,17 @@ class _HomePageState extends State<HomePage>{
   Widget Pizza(){
     return Row(
       children: PizzaList.map((e) => CategoriesContainer(
+        (){
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Categories(
+                      list: PizzaCategoriesList,
+
+                    ),
+                  ),
+                );
+        },
         e.image, 
         e.name
         )).toList(),
@@ -182,7 +147,20 @@ class _HomePageState extends State<HomePage>{
 
    Widget Burger(){
     return Row(
+
       children: BurgerList.map((e) => CategoriesContainer(
+         (){ 
+          print("enter");
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Categories(
+                      list: burgerCategoriesList,
+
+                    ),
+                  ),
+                );
+        },
         e.image, 
         e.name
         )).toList(),
@@ -192,6 +170,17 @@ class _HomePageState extends State<HomePage>{
   Widget SetMenu(){
     return Row(
       children: SetMenuList.map((e) => CategoriesContainer(
+        (){
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Categories(
+                      list: SetMenuCategoriesList,
+
+                    ),
+                  ),
+                );
+        },
         e.image, 
         e.name
         )).toList(),
@@ -203,6 +192,17 @@ class _HomePageState extends State<HomePage>{
  Widget Pasta(){
     return Row(
       children: PastaList.map((e) => CategoriesContainer(
+        (){
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Categories(
+                      list: PastaCategoriesList,
+
+                    ),
+                  ),
+                );
+        },
         e.image, 
         e.name
         )).toList(),
@@ -212,6 +212,17 @@ class _HomePageState extends State<HomePage>{
   Widget Appetizer(){
     return Row(
       children: AppetizerList.map((e) => CategoriesContainer(
+        (){
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Categories(
+                      list: AppetizerCategoriesList,
+
+                    ),
+                  ),
+                );
+        },
         e.image, 
         e.name
         )).toList(),
@@ -222,6 +233,17 @@ class _HomePageState extends State<HomePage>{
    Widget Dessert(){
     return Row(
       children: DessertList.map((e) => CategoriesContainer(
+        (){
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Categories(
+                      list: DessertCategoriesList,
+
+                    ),
+                  ),
+                );
+        },
         e.image, 
         e.name
         )).toList(),
@@ -231,6 +253,17 @@ class _HomePageState extends State<HomePage>{
   Widget Drinks(){
     return Row(
       children: DrinksList.map((e) => CategoriesContainer(
+        (){
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Categories(
+                      list: DrinksCategoriesList,
+
+                    ),
+                  ),
+                );
+        },
         e.image, 
         e.name
         )).toList(),
@@ -281,6 +314,32 @@ class _HomePageState extends State<HomePage>{
     //8th//
     provider.getDrinksCategory();
     DrinksList= provider.throwDrinksList;
+
+    /////single food list//
+    provider.getFoodList();
+    singleFoodList = provider.throwFoodModleList;
+
+  ///food category//
+    provider.getBurgerFoodCategory();
+    burgerCategoriesList = provider.throwBurgerFoodList;
+
+    provider.getPizzaFoodCategory();
+    PizzaCategoriesList = provider.throwPizzaFoodList;
+
+    provider.getPastaFoodCategory();
+    PastaCategoriesList = provider.throwPastaFoodList;
+
+    provider.getSetMenuFoodCategory();
+    SetMenuCategoriesList = provider.throwSetMenuFoodList;
+
+    provider.getAppetizerFoodCategory();
+    AppetizerCategoriesList = provider.throwAppetizerFoodList;
+
+    provider.getDessertFoodCategory();
+    DessertCategoriesList = provider.throwDessertFoodList;
+
+    provider.getDrinksFoodCategory();
+    DrinksCategoriesList = provider.throwDrinksFoodList;
 
 
     return Scaffold(
@@ -484,43 +543,50 @@ class _HomePageState extends State<HomePage>{
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 20,
                 crossAxisCount: 2,
-              children: [
-                BottomContainer(
-                  'Images/pizza_2.jpg', 
-                  'Pizza', 
-                   350
-                   ),
+                children: singleFoodList.map(
+                  (e) => BottomContainer(
+                  e.image,
+                  e.name,
+                  e.price,
+                  ),
+                ).toList()
+              // children: [
+              //   bottomContainer(
+              //     'Images/pizza_2.jpg', 
+              //     'Pizza', 
+              //      350
+              //      ),
             
-                BottomContainer(
-                  'Images/burger_1.jpg', 
-                  'burger', 
-                   250
-                   ),
+              //   bottomContainer(
+              //     'Images/burger_1.jpg', 
+              //     'burger', 
+              //      250
+              //      ),
             
-                BottomContainer(
-                  'Images/pasta_1jpg.jpg', 
-                  'Pasta', 
-                   300
-                   ),
+              //   bottomContainer(
+              //     'Images/pasta_1jpg.jpg', 
+              //     'Pasta', 
+              //      300
+              //      ),
             
-                BottomContainer(
-                  'Images/momo_1.jpg', 
-                  'Momo', 
-                   200
-                   ),
+              //   bottomContainer(
+              //     'Images/momo_1.jpg', 
+              //     'Momo', 
+              //      200
+              //      ),
 
-                BottomContainer(
-                  'Images/pasta_1jpg.jpg', 
-                  'Pasta', 
-                   300
-                   ),
+              //   bottomContainer(
+              //     'Images/pasta_1jpg.jpg', 
+              //     'Pasta', 
+              //      300
+              //      ),
             
-                BottomContainer(
-                  'Images/momo_1.jpg', 
-                  'Momo', 
-                   200
-                   ),
-              ],
+              //   bottomContainer(
+              //     'Images/momo_1.jpg', 
+              //     'Momo', 
+              //      200
+              //      ),
+              // ],
               ),
             ),
       
