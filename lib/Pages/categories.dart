@@ -1,3 +1,4 @@
+import 'package:delivro/Pages/detailPage.dart';
 import 'package:delivro/Pages/widget/bottom_container.dart';
 import 'package:delivro/modles/food_categories_modle.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,18 @@ class Categories extends StatelessWidget{
                     e.image,
                     e.name,
                     e.price,
+                    (){
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailPage(
+                          e.image,
+                          e.name,
+                          e.price,
+                        ),
+                      ),
+                      );
+                    }
                     ),
                   ).toList()
       ),

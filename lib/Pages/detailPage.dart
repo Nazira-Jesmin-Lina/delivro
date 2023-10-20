@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {
+  final String image;
+  final String name;
+  final int price;
+  
+  DetailPage(@required this.image, @required this.name,@required this.price);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +30,7 @@ class DetailPage extends StatelessWidget {
               // height: 500,
               width: double.infinity,
               child: Image(
-                  image: AssetImage('Images/des_pizza.jpeg'),
+                  image: NetworkImage(image),
                   
               
               ),
@@ -59,7 +64,7 @@ class DetailPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Pizza",
+                            name,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 40,
@@ -67,7 +72,7 @@ class DetailPage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "350 BDT",
+                            "$price BDT",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 30,

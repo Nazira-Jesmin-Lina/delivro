@@ -1,4 +1,5 @@
 import 'package:delivro/Pages/categories.dart';
+import 'package:delivro/Pages/detailPage.dart';
 import 'package:delivro/Pages/widget/bottom_container.dart';
 import 'package:delivro/Provider/myProvider.dart';
 import 'package:delivro/modles/categories_modle.dart';
@@ -61,33 +62,47 @@ class _HomePageState extends State<HomePage>{
                   print("hihihi");
                 },
                 child: Container(
-                
-                 margin: EdgeInsets.only(left: 20,top: 20),
-                  height: 70,
-                  width: 70,
-                  decoration: BoxDecoration(
+                      
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 55,
+                      backgroundColor: Colors.white,
+                      backgroundImage: NetworkImage(image),
+                      ),
                     
-                    image: DecorationImage(image: NetworkImage(image)),
-                    // color: Colors.red,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromARGB(255, 95, 113, 187),
-                        offset: const Offset(
-                          5.0,
-                          5.0,
-                        ),
-                        blurRadius: 10.0,
-                        spreadRadius: 2.0,
-                      ), //BoxShadow
-                      BoxShadow(
-                        color: Colors.white,
-                        offset: const Offset(0.0, 0.0),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
-                      ), //BoxShadow
-                    ],
-                  ),
+                       ],
+                    )
+
+
+                
+                //  margin: EdgeInsets.only(left: 20,top: 20),
+                //   height: 70,
+                //   width: 70,
+                //   decoration: BoxDecoration(
+                    
+                //     image: DecorationImage(image: NetworkImage(image)),
+                //     // color: Colors.red,
+                //     borderRadius: BorderRadius.circular(10),
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: Color.fromARGB(255, 95, 113, 187),
+                //         offset: const Offset(
+                //           5.0,
+                //           5.0,
+                //         ),
+                //         blurRadius: 10.0,
+                //         spreadRadius: 2.0,
+                //       ), //BoxShadow
+                //       BoxShadow(
+                //         color: Colors.white,
+                //         offset: const Offset(0.0, 0.0),
+                //         blurRadius: 0.0,
+                //         spreadRadius: 0.0,
+                //       ), //BoxShadow
+                //     ],
+                //   ),
                 ),
               ),
 
@@ -441,53 +456,142 @@ class _HomePageState extends State<HomePage>{
 
 
 
-      body: Container(
-        margin: EdgeInsets.symmetric(horizontal:10),
-        child: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Search',
-                hintStyle: TextStyle(
-                  color: Colors.black,
-                ),
-                prefixIcon: Icon(Icons.search_outlined,color: Colors.black,),
-                filled: true,
-                fillColor: const Color.fromARGB(255, 230, 228, 228),
-                border:OutlineInputBorder(
-                  borderSide: BorderSide(color: Color.fromARGB(255, 59, 12, 229),
-                      strokeAlign: BorderSide.strokeAlignOutside,
-                      style: BorderStyle.solid,
-                      width: 20.0
-                      ),
-                  borderRadius:BorderRadius.circular(20)
-                  ),
+      body: SingleChildScrollView(
+
+
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal:10),
+          child: Column(
+            children: [
+              SizedBox(
+                  height: 10,
               ),
-            ),
-      
-
-
-
+               Align(
+                alignment: Alignment.centerLeft,
+                 child: Text(
+                  
+                      "Hi,Are you Hungry?",
+                       style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Ubuntu',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+               
+                       ),
+               
+                       //textAlign: TextAlign.start,
+                       
+                             ),
+               ),
              SizedBox(
                   height: 10,
+              ),
+             Container(
+              height: 60,
+              width: double.infinity,
+              margin:EdgeInsets.only(left: 2,top: 5),
+              padding: EdgeInsets.all(10),
+              //color:  Color.fromARGB(255, 200, 15, 104),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 200, 15, 104),
+                borderRadius: BorderRadius.circular(10),
+              ),
+             child: Row(
+               children: [
+                Icon(
+                    Icons.discount_outlined,
+                    color: Colors.white,
                 ),
+                 Text(
+                        
+                        "12% off!\n12% off upto tk800. Min order tk500",
+                         style: TextStyle(
+                          color:Colors.white,
+                          //fontFamily: 'Ubuntu',
+                         fontWeight: FontWeight.bold,
+                          fontSize: 15,
 
+                         ),
 
-
-
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
+                         textAlign: TextAlign.left,
+                         
+                  ),
+               ],
+             ),
+             ),
+              SizedBox(
+                  height: 20,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'What are you looking for?',
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                  ),
+                  prefixIcon: Icon(Icons.search_outlined,color: Colors.black,),
+                  filled: true,
+                  fillColor: const Color.fromARGB(255, 230, 228, 228),
+                  border:OutlineInputBorder(
+                    borderSide: BorderSide(color: Color.fromARGB(255, 59, 12, 229),
+                        strokeAlign: BorderSide.strokeAlignOutside,
+                        style: BorderStyle.solid,
+                        width: 20.0
+                        ),
+                    borderRadius:BorderRadius.circular(20)
+                    ),
+                ),
+              ),
+        
+      
+      
+      
+               SizedBox(
+                    height: 40,
+                  ),
+      
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                      "What Are You Craving For?",
+                       style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Ubuntu',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                       ),
+                ),
+              ),
+      
+              SizedBox(
+                    height: 20,
+                  ),
+      
+      
+              Row(
                 children: [
-
-                  All(),
+      
+                 // All(),
                   Pizza(),
+
+                  SizedBox(
+                   width: 10,
+                  ),
+
                   Burger(),
+
+                   SizedBox(
+                   width: 10,
+                  ),
+
                   Pasta(),
-                  SetMenu(),
-                  Appetizer(),
-                  Dessert(),
-                  Drinks(),
+                   SizedBox(
+                   width: 10,
+                  ),
+                 
+
+                  
+                 
+                  
                   // CategoriesContainer(
                   //  'Images/all_1.png',
                   //  'All',
@@ -518,13 +622,13 @@ class _HomePageState extends State<HomePage>{
                   //  'Dessert',
                   //  ),
                   
-      
+        
                   // CategoriesContainer(
                   //  'Images/sides_2jpeg.jpeg',
                   //  'Appetizer',
                   //  ),
                   
-      
+        
                   // CategoriesContainer(
                   // 'Images/Juice_1.png',
                   // 'Juice',
@@ -532,69 +636,159 @@ class _HomePageState extends State<HomePage>{
                   
                 ],
               ),
-            ),
       
-            SizedBox(
-                  height: 20,
-                ),
-            
-            Container(
-              height: 510,
-              child: GridView.count(
-                shrinkWrap: false,
-                primary: false,
-                childAspectRatio: 0.8,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-                crossAxisCount: 2,
-                children: singleFoodList.map(
-                  (e) => BottomContainer(
-                  e.image,
-                  e.name,
-                  e.price,
+      
+        
+              SizedBox(
+                    height: 20,
                   ),
-                ).toList()
-              // children: [
-              //   bottomContainer(
-              //     'Images/pizza_2.jpg', 
-              //     'Pizza', 
-              //      350
-              //      ),
-            
-              //   bottomContainer(
-              //     'Images/burger_1.jpg', 
-              //     'burger', 
-              //      250
-              //      ),
-            
-              //   bottomContainer(
-              //     'Images/pasta_1jpg.jpg', 
-              //     'Pasta', 
-              //      300
-              //      ),
-            
-              //   bottomContainer(
-              //     'Images/momo_1.jpg', 
-              //     'Momo', 
-              //      200
-              //      ),
-
-              //   bottomContainer(
-              //     'Images/pasta_1jpg.jpg', 
-              //     'Pasta', 
-              //      300
-              //      ),
-            
-              //   bottomContainer(
-              //     'Images/momo_1.jpg', 
-              //     'Momo', 
-              //      200
-              //      ),
-              // ],
-              ),
-            ),
       
-          ],
+              Row(
+                children: [
+                  SetMenu(),
+                   SizedBox(
+                   width: 10,
+                  ),
+                  Appetizer(),
+                   SizedBox(
+                   width: 10,
+                  ),
+                  Dessert(),
+               
+                  
+                 
+                ],
+              ),
+      
+               SizedBox(
+                    height: 20,
+                  ),
+                Row(
+                  children: [
+                    
+                     Drinks(),
+                  ],
+                ),
+                   SizedBox(
+                    height: 10,
+                  ),
+                 Align(
+                  alignment: Alignment.centerLeft,
+                   child: Text(
+                      "Recommended For you",
+                       style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Ubuntu',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                       ),
+                               ),
+                 ),
+      
+              SizedBox(
+                    height: 20,
+                  ),
+
+               SizedBox(
+                    height: 20,
+                  ),
+
+
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal, // Set the scroll direction to horizontal
+                    child: Row(
+                      children: [
+                        for (var e in AllCategoriesList)
+                          BottomContainer(
+                            e.image,
+                            e.name,
+                            e.price,
+                            () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailPage(
+                                    e.image,
+                                    e.name,
+                                    e.price,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                      ],
+                    ),
+                  ),
+              // Container(
+              //   height: 510,
+              //   child: GridView.count(
+              //     shrinkWrap: true,
+              //     primary: false,
+              //     childAspectRatio: 0.8,
+              //     mainAxisSpacing: 20,
+              //     crossAxisSpacing: 20,
+              //     crossAxisCount: 2,
+              //     children: AllCategoriesList.map(
+              //       (e) => BottomContainer(
+              //       e.image,
+              //       e.name,
+              //       e.price,
+              //       (){
+              //       Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => DetailPage(
+              //           e.image,
+              //           e.name,
+              //           e.price, 
+              //         ),
+              //       ),
+              //     );
+              //     },
+              //       ),
+              //     ).toList()
+              //   // children: [
+              //   //   bottomContainer(
+              //   //     'Images/pizza_2.jpg', 
+              //   //     'Pizza', 
+              //   //      350
+              //   //      ),
+              
+              //   //   bottomContainer(
+              //   //     'Images/burger_1.jpg', 
+              //   //     'burger', 
+              //   //      250
+              //   //      ),
+              
+              //   //   bottomContainer(
+              //   //     'Images/pasta_1jpg.jpg', 
+              //   //     'Pasta', 
+              //   //      300
+              //   //      ),
+              
+              //   //   bottomContainer(
+              //   //     'Images/momo_1.jpg', 
+              //   //     'Momo', 
+              //   //      200
+              //   //      ),
+      
+              //   //   bottomContainer(
+              //   //     'Images/pasta_1jpg.jpg', 
+              //   //     'Pasta', 
+              //   //      300
+              //   //      ),
+              
+              //   //   bottomContainer(
+              //   //     'Images/momo_1.jpg', 
+              //   //     'Momo', 
+              //   //      200
+              //   //      ),
+              //   // ],
+              //   ),
+              // ),
+        
+            ],
+          ),
         ),
       ),
       
