@@ -49,7 +49,8 @@ class FoodCategoryFactory {
         name: element['name'],
         price: element['price'],
       );
-      
+      if(collectionName=='All')
+      print(foodCategoriesModle.name);
       newFoodCategoryList.add(foodCategoriesModle);
     });
 

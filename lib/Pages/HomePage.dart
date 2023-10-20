@@ -320,6 +320,10 @@ class _HomePageState extends State<HomePage>{
     singleFoodList = provider.throwFoodModleList;
 
   ///food category//
+  
+    provider.getAllFoodCategories();
+    AllCategoriesList = provider.throwAllFoodList;
+
     provider.getBurgerFoodCategory();
     burgerCategoriesList = provider.throwBurgerFoodList;
 
