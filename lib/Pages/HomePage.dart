@@ -8,8 +8,9 @@ import 'package:delivro/modles/food_modle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'SignUp.dart';
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   
   @override
   _HomePageState createState() => _HomePageState();
@@ -76,37 +77,10 @@ class _HomePageState extends State<HomePage>{
                     )
 
 
-                
-                //  margin: EdgeInsets.only(left: 20,top: 20),
-                //   height: 70,
-                //   width: 70,
-                //   decoration: BoxDecoration(
-                    
-                //     image: DecorationImage(image: NetworkImage(image)),
-                //     // color: Colors.red,
-                //     borderRadius: BorderRadius.circular(10),
-                //     boxShadow: [
-                //       BoxShadow(
-                //         color: Color.fromARGB(255, 95, 113, 187),
-                //         offset: const Offset(
-                //           5.0,
-                //           5.0,
-                //         ),
-                //         blurRadius: 10.0,
-                //         spreadRadius: 2.0,
-                //       ), //BoxShadow
-                //       BoxShadow(
-                //         color: Colors.white,
-                //         offset: const Offset(0.0, 0.0),
-                //         blurRadius: 0.0,
-                //         spreadRadius: 0.0,
-                //       ), //BoxShadow
-                //     ],
-                //   ),
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
@@ -128,6 +102,7 @@ class _HomePageState extends State<HomePage>{
                   MaterialPageRoute(
                     builder: (context) => Categories(
                       list: AllCategoriesList,
+                      name: e.name,
 
                     ),
                   ),
@@ -148,6 +123,7 @@ class _HomePageState extends State<HomePage>{
                   MaterialPageRoute(
                     builder: (context) => Categories(
                       list: PizzaCategoriesList,
+                      name: e.name,
 
                     ),
                   ),
@@ -171,6 +147,7 @@ class _HomePageState extends State<HomePage>{
                   MaterialPageRoute(
                     builder: (context) => Categories(
                       list: burgerCategoriesList,
+                      name: e.name,
 
                     ),
                   ),
@@ -191,6 +168,7 @@ class _HomePageState extends State<HomePage>{
                   MaterialPageRoute(
                     builder: (context) => Categories(
                       list: SetMenuCategoriesList,
+                      name: e.name,
 
                     ),
                   ),
@@ -213,6 +191,7 @@ class _HomePageState extends State<HomePage>{
                   MaterialPageRoute(
                     builder: (context) => Categories(
                       list: PastaCategoriesList,
+                      name: e.name,
 
                     ),
                   ),
@@ -233,6 +212,7 @@ class _HomePageState extends State<HomePage>{
                   MaterialPageRoute(
                     builder: (context) => Categories(
                       list: AppetizerCategoriesList,
+                      name: e.name,
 
                     ),
                   ),
@@ -254,6 +234,7 @@ class _HomePageState extends State<HomePage>{
                   MaterialPageRoute(
                     builder: (context) => Categories(
                       list: DessertCategoriesList,
+                      name: e.name,
 
                     ),
                   ),
@@ -274,6 +255,7 @@ class _HomePageState extends State<HomePage>{
                   MaterialPageRoute(
                     builder: (context) => Categories(
                       list: DrinksCategoriesList,
+                      name: e.name,
 
                     ),
                   ),
@@ -294,7 +276,7 @@ class _HomePageState extends State<HomePage>{
                 leading: Icon(icon,color: Colors.black,),
                 title: Text(
                   name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: 'Pacifico',
                     fontSize: 15,
@@ -303,6 +285,7 @@ class _HomePageState extends State<HomePage>{
               );
   }
   
+  @override
   Widget build(BuildContext context){
     MyProvider provider=Provider.of<MyProvider>(context);
     //1st//
@@ -368,7 +351,7 @@ class _HomePageState extends State<HomePage>{
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              UserAccountsDrawerHeader(
+              const UserAccountsDrawerHeader(
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('Images/aaa.jpeg'),
@@ -399,12 +382,12 @@ class _HomePageState extends State<HomePage>{
               drawerItem('Cart',Icons.add_shopping_cart_outlined),
               drawerItem('Order',Icons.shop_2_outlined),
               drawerItem('About',Icons.info_outline_rounded),
-              Divider(
+              const Divider(
                 thickness: 2,
                 color: Colors.black,
               ),
 
-              ListTile(
+              const ListTile(
                 leading: Text(
                   'Communicate',
                   style: TextStyle(
@@ -443,7 +426,7 @@ class _HomePageState extends State<HomePage>{
         ),
 
 
-        actions: [
+        actions: const [
           Padding(
             padding: EdgeInsets.all(9.0),
             child: CircleAvatar(
@@ -460,13 +443,13 @@ class _HomePageState extends State<HomePage>{
 
 
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal:10),
+          margin: const EdgeInsets.symmetric(horizontal:10),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                   height: 10,
               ),
-               Align(
+               const Align(
                 alignment: Alignment.centerLeft,
                  child: Text(
                   
@@ -483,20 +466,20 @@ class _HomePageState extends State<HomePage>{
                        
                              ),
                ),
-             SizedBox(
+             const SizedBox(
                   height: 10,
               ),
              Container(
               height: 60,
               width: double.infinity,
-              margin:EdgeInsets.only(left: 2,top: 5),
-              padding: EdgeInsets.all(10),
+              margin:const EdgeInsets.only(left: 2,top: 5),
+              padding: const EdgeInsets.all(10),
               //color:  Color.fromARGB(255, 200, 15, 104),
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 200, 15, 104),
+                color: const Color.fromARGB(255, 200, 15, 104),
                 borderRadius: BorderRadius.circular(10),
               ),
-             child: Row(
+             child: const Row(
                children: [
                 Icon(
                     Icons.discount_outlined,
@@ -519,20 +502,20 @@ class _HomePageState extends State<HomePage>{
                ],
              ),
              ),
-              SizedBox(
+              const SizedBox(
                   height: 20,
               ),
               TextField(
                 decoration: InputDecoration(
                   hintText: 'What are you looking for?',
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.grey,
                   ),
-                  prefixIcon: Icon(Icons.search_outlined,color: Colors.black,),
+                  prefixIcon: const Icon(Icons.search_outlined,color: Colors.black,),
                   filled: true,
                   fillColor: const Color.fromARGB(255, 230, 228, 228),
                   border:OutlineInputBorder(
-                    borderSide: BorderSide(color: Color.fromARGB(255, 59, 12, 229),
+                    borderSide: const BorderSide(color: Color.fromARGB(255, 59, 12, 229),
                         strokeAlign: BorderSide.strokeAlignOutside,
                         style: BorderStyle.solid,
                         width: 20.0
@@ -545,11 +528,11 @@ class _HomePageState extends State<HomePage>{
       
       
       
-               SizedBox(
+               const SizedBox(
                     height: 40,
                   ),
       
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                       "What Are You Craving For?",
@@ -562,7 +545,7 @@ class _HomePageState extends State<HomePage>{
                 ),
               ),
       
-              SizedBox(
+              const SizedBox(
                     height: 20,
                   ),
       
@@ -573,84 +556,39 @@ class _HomePageState extends State<HomePage>{
                  // All(),
                   Pizza(),
 
-                  SizedBox(
+                  const SizedBox(
                    width: 10,
                   ),
 
                   Burger(),
 
-                   SizedBox(
+                   const SizedBox(
                    width: 10,
                   ),
 
                   Pasta(),
-                   SizedBox(
+                   const SizedBox(
                    width: 10,
                   ),
-                 
 
-                  
-                 
-                  
-                  // CategoriesContainer(
-                  //  'Images/all_1.png',
-                  //  'All',
-                  //  ),
-                  
-                  // CategoriesContainer(
-                  //  'Images/pizza_2.jpg',
-                  //  'Pizza',
-                  //  ),
-                  
-                  // CategoriesContainer(
-                  //  'Images/burger_1.jpg',
-                  //  'Burger',
-                  //  ),
-                  
-                  // CategoriesContainer(
-                  //  'Images/pasta_1jpg.jpg',
-                  //  'Pasta',
-                  //  ),
-                  
-                  // CategoriesContainer(
-                  //  'Images/setmenu_2.jpg',
-                  //  'Set menu',
-                  //  ),
-                  
-                  // CategoriesContainer(
-                  //  'Images/dessert_1.jpg',
-                  //  'Dessert',
-                  //  ),
-                  
-        
-                  // CategoriesContainer(
-                  //  'Images/sides_2jpeg.jpeg',
-                  //  'Appetizer',
-                  //  ),
-                  
-        
-                  // CategoriesContainer(
-                  // 'Images/Juice_1.png',
-                  // 'Juice',
-                  // ),
                   
                 ],
               ),
       
       
         
-              SizedBox(
+              const SizedBox(
                     height: 20,
                   ),
       
               Row(
                 children: [
                   SetMenu(),
-                   SizedBox(
+                   const SizedBox(
                    width: 10,
                   ),
                   Appetizer(),
-                   SizedBox(
+                   const SizedBox(
                    width: 10,
                   ),
                   Dessert(),
@@ -660,7 +598,7 @@ class _HomePageState extends State<HomePage>{
                 ],
               ),
       
-               SizedBox(
+               const SizedBox(
                     height: 20,
                   ),
                 Row(
@@ -669,10 +607,10 @@ class _HomePageState extends State<HomePage>{
                      Drinks(),
                   ],
                 ),
-                   SizedBox(
+                   const SizedBox(
                     height: 10,
                   ),
-                 Align(
+                 const Align(
                   alignment: Alignment.centerLeft,
                    child: Text(
                       "Recommended For you",
@@ -685,11 +623,9 @@ class _HomePageState extends State<HomePage>{
                                ),
                  ),
       
-              SizedBox(
-                    height: 20,
-                  ),
 
-               SizedBox(
+
+               const SizedBox(
                     height: 20,
                   ),
 
@@ -719,74 +655,7 @@ class _HomePageState extends State<HomePage>{
                       ],
                     ),
                   ),
-              // Container(
-              //   height: 510,
-              //   child: GridView.count(
-              //     shrinkWrap: true,
-              //     primary: false,
-              //     childAspectRatio: 0.8,
-              //     mainAxisSpacing: 20,
-              //     crossAxisSpacing: 20,
-              //     crossAxisCount: 2,
-              //     children: AllCategoriesList.map(
-              //       (e) => BottomContainer(
-              //       e.image,
-              //       e.name,
-              //       e.price,
-              //       (){
-              //       Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (context) => DetailPage(
-              //           e.image,
-              //           e.name,
-              //           e.price, 
-              //         ),
-              //       ),
-              //     );
-              //     },
-              //       ),
-              //     ).toList()
-              //   // children: [
-              //   //   bottomContainer(
-              //   //     'Images/pizza_2.jpg', 
-              //   //     'Pizza', 
-              //   //      350
-              //   //      ),
-              
-              //   //   bottomContainer(
-              //   //     'Images/burger_1.jpg', 
-              //   //     'burger', 
-              //   //      250
-              //   //      ),
-              
-              //   //   bottomContainer(
-              //   //     'Images/pasta_1jpg.jpg', 
-              //   //     'Pasta', 
-              //   //      300
-              //   //      ),
-              
-              //   //   bottomContainer(
-              //   //     'Images/momo_1.jpg', 
-              //   //     'Momo', 
-              //   //      200
-              //   //      ),
-      
-              //   //   bottomContainer(
-              //   //     'Images/pasta_1jpg.jpg', 
-              //   //     'Pasta', 
-              //   //      300
-              //   //      ),
-              
-              //   //   bottomContainer(
-              //   //     'Images/momo_1.jpg', 
-              //   //     'Momo', 
-              //   //      200
-              //   //      ),
-              //   // ],
-              //   ),
-              // ),
-        
+
             ],
           ),
         ),

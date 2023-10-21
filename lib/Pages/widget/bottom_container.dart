@@ -4,7 +4,7 @@ class BottomContainer extends StatelessWidget{
   final String name;
   final int price;
   final Function ontap;
-  BottomContainer(@required this.image,@required this.name,@required this.price,@required this.ontap);
+  const BottomContainer(@required this.image,@required this.name,@required this.price,@required this.ontap, {super.key});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -15,16 +15,16 @@ class BottomContainer extends StatelessWidget{
         child: Container(
                 height: 250,
                 width: 200,
-                margin: EdgeInsets.only(top: 4,left: 2,right: 2),
-                padding: EdgeInsets.only(top: 2),
+                margin: const EdgeInsets.only(top: 15,left: 12,right: 12,bottom: 5),
+                padding: const EdgeInsets.only(top: 5,left: 15,bottom: 5),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 237, 234, 234),
+                  color: const Color.fromARGB(255, 237, 234, 234),
                   borderRadius: BorderRadius.circular(8),
                     
-                  boxShadow: [
+                  boxShadow: const [
                         BoxShadow(
                           color: Color.fromARGB(255, 95, 113, 187),
-                          offset: const Offset(
+                          offset: Offset(
                             0.0,
                             0.0,
                           ),
@@ -33,7 +33,7 @@ class BottomContainer extends StatelessWidget{
                         ), //BoxShadow
                         BoxShadow(
                           color: Colors.white,
-                          offset: const Offset(0.0, 0.0),
+                          offset: Offset(0.0, 0.0),
                           blurRadius: 0.0,
                           spreadRadius: 0.0,
                         ), //BoxShadow
@@ -45,12 +45,13 @@ class BottomContainer extends StatelessWidget{
                   children: [
                     CircleAvatar(
                       radius: 60,
+                      backgroundColor: Colors.white,
                       backgroundImage: NetworkImage(image),
                     ),
                     ListTile(
                       leading: Text(
                           name,
-                          style: TextStyle(
+                          style: const TextStyle(
                              color: Colors.black,
                              fontSize: 15,
                              fontFamily: "Pacifico",
@@ -61,8 +62,8 @@ class BottomContainer extends StatelessWidget{
                     ),
                   Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 12),
                         child: Row(
                           children: [
                             Icon(
@@ -93,12 +94,12 @@ class BottomContainer extends StatelessWidget{
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 12,
                       ),
                        Text(
                           '$price BDT',
-                          style: TextStyle(
+                          style: const TextStyle(
                              color: Colors.black,
                              fontSize: 16,
                              fontFamily: "Pacifico",

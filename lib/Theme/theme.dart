@@ -2,29 +2,29 @@ import 'package:flutter/material.dart';
 
 ThemeData lightTheme=ThemeData(
     scaffoldBackgroundColor:Colors.white,
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       color:Colors.white,),
     brightness: Brightness.light,
-    colorScheme: ColorScheme.light(
+    colorScheme: const ColorScheme.light(
       background: Colors.white,
       primary:Colors.white,
-      secondary: const Color.fromARGB(255, 230, 228, 228),
+      secondary: Color.fromARGB(255, 230, 228, 228),
       
 
     ),
 
-    buttonTheme: ButtonThemeData(
+    buttonTheme: const ButtonThemeData(
       buttonColor:Color.fromARGB(255, 200, 15, 104),
   
     ),
     
-    textTheme: TextTheme(
-      bodyText2: TextStyle(
+    textTheme: const TextTheme(
+      bodyMedium: TextStyle(
         color: Colors.white,
       ),
     ),
 
-    inputDecorationTheme: InputDecorationTheme(
+    inputDecorationTheme: const InputDecorationTheme(
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(color: Color.fromARGB(255, 59, 12, 229)  ),
 

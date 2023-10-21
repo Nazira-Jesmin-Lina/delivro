@@ -4,18 +4,53 @@ import 'package:delivro/modles/food_categories_modle.dart';
 import 'package:flutter/material.dart';
 class Categories extends StatelessWidget{
   List<FoodCategoriesModle>list=[];
-  Categories({required this.list});
+  final String name;
+  Categories({super.key, required this.list,required this.name});
   @override
   Widget build(BuildContext context) {
     
 
     return Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: const Color.fromARGB(255, 200, 15, 104),
+            ),
+            onPressed: () {},
+          ),
+
+          title:Align(
+            alignment: Alignment.topCenter,
+            child: Text(name,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontFamily: "Ubuntu",
+                fontWeight: FontWeight.bold,
+              ),),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+                color: const Color.fromARGB(255, 200, 15, 104),
+              ),
+              onPressed: () {
+                // Add your shopping cart icon's functionality here.
+              },
+            ),
+          ],
+
+        ),
       body: GridView.count(
           shrinkWrap: false,
                   primary: false,
                   childAspectRatio: 0.8,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 5,
                   crossAxisCount: 2,
                   children: list.map(
                     (e) => BottomContainer(

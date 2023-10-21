@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivro/modles/categories_modle.dart';
 import 'package:delivro/modles/food_categories_modle.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -19,13 +18,13 @@ class CategoryFactory {
         .collection(collectionName)
         .get();
 
-    querySnapshot.docs.forEach((element) {
+    for (var element in querySnapshot.docs) {
       CategoriesModle categoryModle = CategoriesModle(
         image: element['image'],
         name: element['name'],
       );
       newCategoryList.add(categoryModle);
-    });
+    }
 
     return newCategoryList;
   }
@@ -43,7 +42,7 @@ class FoodCategoryFactory {
         .collection(collectionName)
         .get();
 
-    querySnapshot.docs.forEach((element) {
+    for (var element in querySnapshot.docs) {
       FoodCategoriesModle foodCategoriesModle = FoodCategoriesModle(
         image: element['image'],
         name: element['name'],
@@ -52,7 +51,7 @@ class FoodCategoryFactory {
       //if(collectionName=='All')
       //print(foodCategoriesModle.name);
       newFoodCategoryList.add(foodCategoriesModle);
-    });
+    }
 
     return newFoodCategoryList;
   }
@@ -167,8 +166,7 @@ List<FoodModle> foodModleList = [];
     List<FoodModle> newSingleFoodList = [];
     QuerySnapshot querySnapshot =
         await FirebaseFirestore.instance.collection('Foods').get();
-    querySnapshot.docs.forEach(
-      (element) {
+    for (var element in querySnapshot.docs) {
        FoodModle foodModle = FoodModle(
           name: element['name'],
           image: element['image'],
@@ -176,8 +174,7 @@ List<FoodModle> foodModleList = [];
         );
         //print(foodModle.name);
         newSingleFoodList.add(foodModle);
-      },
-    );
+      }
 
     foodModleList = newSingleFoodList;
     notifyListeners();

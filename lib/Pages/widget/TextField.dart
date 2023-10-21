@@ -5,7 +5,7 @@ class MyTextField extends StatelessWidget{
   final IconData icon;
   final bool obsecureText;
   final TextEditingController? controller;
-  MyTextField(this.hintText,this. icon,this.obsecureText,@required this.controller);
+  const MyTextField(this.hintText,this. icon,this.obsecureText,@required this.controller, {super.key});
   @override
   Widget build(BuildContext context){
     return TextFormField(
@@ -15,13 +15,13 @@ class MyTextField extends StatelessWidget{
                   
                   prefixIcon: Icon(icon),
                   hintText: hintText,
-                  hintStyle: TextStyle(color: Colors.blueGrey,
+                  hintStyle: const TextStyle(color: Colors.blueGrey,
                   fontFamily: "Pacifico",
                   ),
                   filled: true,
                   fillColor: const Color.fromARGB(255, 230, 228, 228),
                   border:OutlineInputBorder(
-                    borderSide: BorderSide(color: Color.fromARGB(255, 59, 12, 229),
+                    borderSide: const BorderSide(color: Color.fromARGB(255, 59, 12, 229),
                       strokeAlign: BorderSide.strokeAlignOutside,
                       style: BorderStyle.solid,
                       width: 20.0

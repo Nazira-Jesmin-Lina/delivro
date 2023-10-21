@@ -1,9 +1,7 @@
-import 'dart:ffi';
 
 import 'package:delivro/Pages/widget/TextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'widget/TextField.dart';
 import 'SignUp.dart';
 import 'HomePage.dart';
 
@@ -12,6 +10,8 @@ class LogInPage extends StatefulWidget{
   
   static Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+  const LogInPage({super.key});
 
   @override
   State<LogInPage> createState() => _LogInPageState();
@@ -31,22 +31,22 @@ class _LogInPageState extends State<LogInPage> {
         email: email.text,
         password: password.text
       );
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login Successfull')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Successfull')));
       Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => HomePage()),
+            MaterialPageRoute(builder: (context) => const HomePage()),
           );
     } on FirebaseAuthException catch (e) {
       print('hhhhhhhh');
       if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No user found for that email.')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No user found for that email.')));
 
       } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Wrong password provided for that user.')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Wrong password provided for that user.')));
       }
       else
       {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Credentials.')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Invalid Credentials.')));
       }
       setState(() {
         loading=false;
@@ -57,21 +57,20 @@ class _LogInPageState extends State<LogInPage> {
 
   void validation() {
     if (email.text.trim().isEmpty ||
-        email.text.trim() == null && password.text.trim().isEmpty ||
-        password.text.trim() == null) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("All Field is Empty")));
+        email.text.trim() == null && password.text.trim().isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("All Field is Empty")));
         return;
     }
-    if (email.text.trim().isEmpty || email.text.trim() == null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Email is Empty")));
+    if (email.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Email is Empty")));
       return;
     } 
     // else if (!regExp.hasMatch(email.text)) {
     //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("lease enter vaild Email")));
     //   return;
     // }
-    if (password.text.trim().isEmpty || password.text.trim() == null) {
-       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Password is Empty")));
+    if (password.text.trim().isEmpty) {
+       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Password is Empty")));
       return;
     } else {
       setState(() {
@@ -81,27 +80,28 @@ class _LogInPageState extends State<LogInPage> {
 
     }
   }
+  @override
   Widget build(BuildContext context){
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children:[ 
-          Container(
+          const SizedBox(
             height: 250,
             child: Image(image: AssetImage('Images/delivery_bro.png')),
             ),
           
-        Text('Delivro',
+        const Text('Delivro',
           style: TextStyle(color: Color.fromARGB(255, 200, 15, 104),
           fontFamily: 'Pacifico',
           fontSize: 40,
           ),
         ),
-        SizedBox(
+        const SizedBox(
               height: 30,
               ),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,7 +113,7 @@ class _LogInPageState extends State<LogInPage> {
                 email,
                 ),
         
-                SizedBox(
+                const SizedBox(
                 height: 20,
                 ),
         
@@ -128,10 +128,10 @@ class _LogInPageState extends State<LogInPage> {
           
           ),
         ),
-        SizedBox(
+        const SizedBox(
               height: 5,
               ),
-        Container(
+        const SizedBox(
           height: 50,
           child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -163,10 +163,10 @@ class _LogInPageState extends State<LogInPage> {
           ],
         ),
         ),
-        SizedBox(
+        const SizedBox(
               height: 20,
               ),
-        loading?CircularProgressIndicator():Row(
+        loading?const CircularProgressIndicator():Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
@@ -180,23 +180,23 @@ class _LogInPageState extends State<LogInPage> {
                   validation();
             
                 },
-                child: Text('Log In'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 200, 15, 104),
+                  backgroundColor: const Color.fromARGB(255, 200, 15, 104),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30), // <-- Radius
                   ),
                 ),
+                child: const Text('Log In'),
               ),
             ),
           ],
         ),
-        Container(
+        SizedBox(
           height: 200,
           child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Dont have an Account?',
+            const Text('Dont have an Account?',
             style:TextStyle(
               color: Colors.black,
               fontSize: 20,
@@ -208,10 +208,10 @@ class _LogInPageState extends State<LogInPage> {
                 // Navigate to the SignUpPage when "Sign Up" text is tapped
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()),
+                  MaterialPageRoute(builder: (context) => const SignUpPage()),
                 );
               },
-              child:Text('Sign Up',
+              child:const Text('Sign Up',
               style:TextStyle(
                 color: Colors.green,
                 fontSize: 20,

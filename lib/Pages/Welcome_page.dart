@@ -3,6 +3,8 @@ import 'package:lottie/lottie.dart';
 import 'package:delivro/Pages/LogIn_page.dart';
 
 class WelcomePage extends StatefulWidget {
+  const WelcomePage({super.key});
+
   @override
   _WelcomePageState createState() => _WelcomePageState();
 }
@@ -12,10 +14,10 @@ class _WelcomePageState extends State<WelcomePage> {
   void initState() {
     super.initState();
     // Delay navigation to the LoginPage by 4 seconds
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => LogInPage(),
+          builder: (context) => const LogInPage(),
         ),
       );
     });
@@ -28,7 +30,7 @@ class _WelcomePageState extends State<WelcomePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             'Welcome to Delivro',
             style: TextStyle(
               fontSize: 40, 
@@ -37,7 +39,7 @@ class _WelcomePageState extends State<WelcomePage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 20), // Adjust the spacing between text and animation
+          const SizedBox(height: 20), // Adjust the spacing between text and animation
           Lottie.asset('Animation/aa.json'),
         ],
       ),
