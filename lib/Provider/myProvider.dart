@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivro/modles/cart_modle.dart';
 import 'package:delivro/modles/categories_modle.dart';
 import 'package:delivro/modles/food_categories_modle.dart';
 import 'package:flutter/widgets.dart';
@@ -310,4 +311,43 @@ Future<void> getAllFoodCategories() async {
 //     return burgerCategoriesList;
 //   }
 
+/////////////add to cart ////////////
+  List<CartModle> cartList = [];
+  List<CartModle> newCartList = [];
+  late CartModle cartModle;
+  void addToCart({
+    required String image,
+    required String name,
+    required int price,
+    required int quantity,
+  }) {
+    cartModle = CartModle(
+      image: image,
+      name: name,
+      price: price,
+      quantity: quantity,
+    );
+    newCartList.add(cartModle);
+    cartList = newCartList;
+  }
+
+  get throwCartList {
+    return cartList;
+  }
+
+  int totalprice() {
+    int total = 0;
+    cartList.forEach((element) {
+      total += element.price * element.quantity;
+    });
+    return total;
+  }
+  late int deleteIndex;
+  void getDeleteIndex(int index){
+      deleteIndex=index;
+  }
+  void delete(){
+    cartList.removeAt(deleteIndex);
+    notifyListeners();
+  }
 }

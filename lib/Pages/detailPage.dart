@@ -1,3 +1,4 @@
+import 'package:delivro/Pages/cart_page.dart';
 import 'package:delivro/Pages/widget/bottom_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,26 +6,30 @@ import 'package:delivro/Provider/myProvider.dart';
 
 import '../modles/food_categories_modle.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   final String image;
   final String name;
   final int price;
+  int quantity=1;
+  const DetailPage(
+      @required this.image, @required this.name, @required this.price,
+      {super.key});
 
-  const DetailPage(@required this.image, @required this.name,@required this.price, {super.key});
+  @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
-    List<FoodCategoriesModle> AllCategoriesList=[];
+    List<FoodCategoriesModle> AllCategoriesList = [];
 
-
-    MyProvider provider=Provider.of<MyProvider>(context);
+    MyProvider provider = Provider.of<MyProvider>(context);
     provider.getAllFoodCategories();
     AllCategoriesList = provider.throwAllFoodList;
 
     return Scaffold(
-
-      bottomNavigationBar :
-      Row(
-
+      bottomNavigationBar: Row(
         //mainAxisAlignment: MainAxisAlignment.end,
         //crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -71,7 +76,20 @@ class DetailPage extends StatelessWidget {
             width: 40,
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              //here
+              provider.addToCart(
+                image: widget.image,
+                name: widget.name,
+                price: widget.price,
+                quantity: quantity,
+              );
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => CartPage(),
+                ),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 200, 15, 104),
               shape: RoundedRectangleBorder(
@@ -100,15 +118,16 @@ class DetailPage extends StatelessWidget {
           ),
           onPressed: () {},
         ),
-
-        title:Align(
+        title: Align(
           alignment: Alignment.topCenter,
-          child: Text(name,
+          child: Text(
+            widget.name,
             style: const TextStyle(
               color: Colors.black,
               fontSize: 20,
               fontFamily: "Ubuntu",
-            ),),
+            ),
+          ),
         ),
         actions: <Widget>[
           IconButton(
@@ -121,25 +140,20 @@ class DetailPage extends StatelessWidget {
             },
           ),
         ],
-
       ),
       body: SingleChildScrollView(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Stack(
-
             children: <Widget>[
               Container(
-
                 height: 250,
                 color: Colors.white,
                 width: double.infinity,
                 //height: double.infinity,
                 child: Image(
-                   fit: BoxFit.fitWidth,
-                    image: NetworkImage(image),
-
-
+                  fit: BoxFit.fitWidth,
+                  image: NetworkImage(widget.image),
                 ),
               ),
               Positioned(
@@ -148,7 +162,6 @@ class DetailPage extends StatelessWidget {
                 // width: 1000,
                 // height: 1000,
                 child: Container(
-
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(
@@ -167,7 +180,7 @@ class DetailPage extends StatelessWidget {
                     ],
                   ),
                   child: SingleChildScrollView(
-                    scrollDirection:Axis.vertical,
+                    scrollDirection: Axis.vertical,
                     child: Column(
                       //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,7 +189,7 @@ class DetailPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              name,
+                              widget.name,
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 20,
@@ -184,7 +197,7 @@ class DetailPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "$price BDT",
+                              "${widget.price} BDT",
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
@@ -214,13 +227,13 @@ class DetailPage extends StatelessWidget {
                           ),
                         ),
 
-
                         //
                         // const SizedBox(
                         //   height: 20,
                         // ),
                         SingleChildScrollView(
-                          scrollDirection: Axis.horizontal, // Set the scroll direction to horizontal
+                          scrollDirection: Axis
+                              .horizontal, // Set the scroll direction to horizontal
                           child: Row(
                             children: [
                               for (var e in AllCategoriesList)
@@ -228,7 +241,7 @@ class DetailPage extends StatelessWidget {
                                   e.image,
                                   e.name,
                                   e.price,
-                                      () {
+                                  () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -246,8 +259,6 @@ class DetailPage extends StatelessWidget {
                         ),
 
                         const SizedBox(height: 90),
-
-
                       ],
                     ),
                   ),
