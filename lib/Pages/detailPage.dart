@@ -21,6 +21,75 @@ class DetailPage extends StatelessWidget {
     AllCategoriesList = provider.throwAllFoodList;
 
     return Scaffold(
+
+      bottomNavigationBar :
+      Row(
+
+        //mainAxisAlignment: MainAxisAlignment.end,
+        //crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            height: 30,
+            width: 40,
+            margin: EdgeInsets.only(left: 10),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 200, 15, 104),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Icon(
+              Icons.remove,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(
+            width: 12,
+          ),
+          const Text(
+            '1',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          Container(
+            height: 30,
+            width: 40,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 200, 15, 104),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(
+            width: 40,
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 200, 15, 104),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+            child: const Row(
+              children: [
+                Icon(Icons.shopping_cart),
+                SizedBox(
+                  width: 70,
+                ),
+                Text('Add to cart'),
+              ],
+            ),
+          ),
+        ],
+      ),
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.white,
@@ -178,71 +247,7 @@ class DetailPage extends StatelessWidget {
 
                         const SizedBox(height: 90),
 
-                        Row(
-                          //mainAxisAlignment: MainAxisAlignment.end,
-                          //crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Container(
-                              height: 30,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 200, 15, 104),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Icon(
-                                Icons.remove,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Text(
-                              '1',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              height: 30,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 200, 15, 104),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 40,
-                            ),
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color.fromARGB(255, 200, 15, 104),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                              ),
-                              child: const Row(
-                                children: [
-                                  Icon(Icons.shopping_cart),
-                                  SizedBox(
-                                    width: 70,
-                                  ),
-                                  Text('Add to cart'),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+
                       ],
                     ),
                   ),

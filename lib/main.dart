@@ -1,8 +1,11 @@
 import 'package:delivro/Pages/Welcome_page.dart';
+import 'package:delivro/Pages/cart_page.dart';
 import 'package:delivro/Provider/myProvider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'Pages/HomePage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,8 +40,8 @@ class MyApp extends StatelessWidget {
           ),
           // theme: lightTheme,
           // darkTheme: darkTheme,
-        home: const WelcomePage(),
-        //home: HomePage(),
+       // home: const WelcomePage(),
+        home:CartPage(),
       ),
     );
   }
