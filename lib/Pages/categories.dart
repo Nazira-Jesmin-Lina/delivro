@@ -1,7 +1,10 @@
+import 'package:delivro/Pages/cart_page.dart';
 import 'package:delivro/Pages/detailPage.dart';
 import 'package:delivro/Pages/widget/bottom_container.dart';
 import 'package:delivro/modles/food_categories_modle.dart';
 import 'package:flutter/material.dart';
+
+import 'HomePage.dart';
 class Categories extends StatelessWidget{
   List<FoodCategoriesModle>list=[];
   final String name;
@@ -19,7 +22,15 @@ class Categories extends StatelessWidget{
               Icons.arrow_back,
               color: const Color.fromARGB(255, 200, 15, 104),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(),
+
+                ),
+              );
+            },
           ),
 
           title:Align(
@@ -39,7 +50,13 @@ class Categories extends StatelessWidget{
                 color: const Color.fromARGB(255, 200, 15, 104),
               ),
               onPressed: () {
-                // Add your shopping cart icon's functionality here.
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartPage(),
+
+                  ),
+                );
               },
             ),
           ],

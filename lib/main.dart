@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           // theme: lightTheme,
           // darkTheme: darkTheme,
        // home: const WelcomePage(),
-        home:CartPage(),
+        home:HomePage(),
       ),
     );
   }

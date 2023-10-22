@@ -5,52 +5,63 @@ import 'package:provider/provider.dart';
 import 'package:delivro/Provider/myProvider.dart';
 
 import '../modles/food_categories_modle.dart';
+import 'HomePage.dart';
 
 class DetailPage extends StatefulWidget {
   final String image;
   final String name;
   final int price;
-  int quantity=1;
-  const DetailPage(
-      @required this.image, @required this.name, @required this.price,
-      {super.key});
+
+  const DetailPage(@required this.image, @required this.name,@required this.price, {super.key});
 
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
+  int quantity=1;
   @override
   Widget build(BuildContext context) {
-    List<FoodCategoriesModle> AllCategoriesList = [];
+    List<FoodCategoriesModle> AllCategoriesList=[];
 
-    MyProvider provider = Provider.of<MyProvider>(context);
+
+    MyProvider provider=Provider.of<MyProvider>(context);
     provider.getAllFoodCategories();
     AllCategoriesList = provider.throwAllFoodList;
 
     return Scaffold(
-      bottomNavigationBar: Row(
+
+      bottomNavigationBar :
+      Row(
+
         //mainAxisAlignment: MainAxisAlignment.end,
         //crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Container(
-            height: 30,
-            width: 40,
-            margin: EdgeInsets.only(left: 10),
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 200, 15, 104),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Icon(
-              Icons.remove,
-              color: Colors.white,
+          GestureDetector(
+            onTap: (){
+              setState(() {
+                if (quantity > 1) quantity--;
+              });
+            },
+            child: Container(
+              height: 30,
+              width: 40,
+              margin: EdgeInsets.only(left: 10),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 200, 15, 104),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(
+                Icons.remove,
+                color: Colors.white,
+              ),
             ),
           ),
           const SizedBox(
             width: 12,
           ),
-          const Text(
-            '1',
+          Text(
+            '$quantity',
             style: TextStyle(
               color: Colors.black,
               fontSize: 20,
@@ -60,16 +71,23 @@ class _DetailPageState extends State<DetailPage> {
           const SizedBox(
             width: 20,
           ),
-          Container(
-            height: 30,
-            width: 40,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 200, 15, 104),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
+          GestureDetector(
+            onTap: (){
+              setState(() {
+                quantity++;
+              });
+            },
+            child: Container(
+              height: 30,
+              width: 40,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 200, 15, 104),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
             ),
           ),
           const SizedBox(
@@ -77,13 +95,11 @@ class _DetailPageState extends State<DetailPage> {
           ),
           ElevatedButton(
             onPressed: () {
-              //here
-              provider.addToCart(
-                image: widget.image,
-                name: widget.name,
-                price: widget.price,
-                quantity: quantity,
-              );
+              provider.addToCart(image: widget.image,
+                  name: widget.name,
+                  price: widget.price,
+                  quantity: quantity,);
+
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => CartPage(),
@@ -116,18 +132,25 @@ class _DetailPageState extends State<DetailPage> {
             Icons.arrow_back,
             color: const Color.fromARGB(255, 200, 15, 104),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
+
+              ),
+            );
+          },
         ),
-        title: Align(
+
+        title:Align(
           alignment: Alignment.topCenter,
-          child: Text(
-            widget.name,
+          child: Text(widget.name,
             style: const TextStyle(
               color: Colors.black,
               fontSize: 20,
               fontFamily: "Ubuntu",
-            ),
-          ),
+            ),),
         ),
         actions: <Widget>[
           IconButton(
@@ -136,17 +159,26 @@ class _DetailPageState extends State<DetailPage> {
               color: const Color.fromARGB(255, 200, 15, 104),
             ),
             onPressed: () {
-              // Add your shopping cart icon's functionality here.
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CartPage(),
+
+                ),
+              );
             },
           ),
         ],
+
       ),
       body: SingleChildScrollView(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Stack(
+
             children: <Widget>[
               Container(
+
                 height: 250,
                 color: Colors.white,
                 width: double.infinity,
@@ -154,6 +186,8 @@ class _DetailPageState extends State<DetailPage> {
                 child: Image(
                   fit: BoxFit.fitWidth,
                   image: NetworkImage(widget.image),
+
+
                 ),
               ),
               Positioned(
@@ -162,6 +196,7 @@ class _DetailPageState extends State<DetailPage> {
                 // width: 1000,
                 // height: 1000,
                 child: Container(
+
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(
@@ -180,7 +215,7 @@ class _DetailPageState extends State<DetailPage> {
                     ],
                   ),
                   child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
+                    scrollDirection:Axis.vertical,
                     child: Column(
                       //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,13 +262,13 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ),
 
+
                         //
                         // const SizedBox(
                         //   height: 20,
                         // ),
                         SingleChildScrollView(
-                          scrollDirection: Axis
-                              .horizontal, // Set the scroll direction to horizontal
+                          scrollDirection: Axis.horizontal, // Set the scroll direction to horizontal
                           child: Row(
                             children: [
                               for (var e in AllCategoriesList)
@@ -241,7 +276,7 @@ class _DetailPageState extends State<DetailPage> {
                                   e.image,
                                   e.name,
                                   e.price,
-                                  () {
+                                      () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -259,6 +294,8 @@ class _DetailPageState extends State<DetailPage> {
                         ),
 
                         const SizedBox(height: 90),
+
+
                       ],
                     ),
                   ),

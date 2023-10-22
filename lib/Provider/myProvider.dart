@@ -314,14 +314,14 @@ Future<void> getAllFoodCategories() async {
 /////////////add to cart ////////////
   List<CartModle> cartList = [];
   List<CartModle> newCartList = [];
-  late CartModle cartModle;
+  //late CartModle cartModle;
   void addToCart({
     required String image,
     required String name,
     required int price,
     required int quantity,
-  }) {
-    cartModle = CartModle(
+}) {
+    CartModle cartModle = CartModle(
       image: image,
       name: name,
       price: price,

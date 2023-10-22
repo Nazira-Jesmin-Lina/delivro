@@ -1,9 +1,173 @@
+import 'dart:ffi';
+
+import 'package:delivro/Pages/HomePage.dart';
+import 'package:delivro/Provider/myProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class CartPage extends StatelessWidget{
+class CartPage extends StatefulWidget{
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  @override
+  Widget cartItem({
+    required String image,
+    required String name,
+    required int price,
+    required Function ontap,
+    required int quantity,
+  }) {
+    return Row(
+      children: [
+        Container(
+            margin: EdgeInsets.only(bottom: 5, left: 5, right: 5),
+            padding: EdgeInsets.only(bottom: 20, left: 20, right: 5),
+            //height: 65,
+         // width: double.infinity ,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+
+                boxShadow: const [
+            BoxShadow(
+            color: Color.fromARGB(255, 95, 113, 187),
+            offset: Offset(
+            0.0,
+            0.0,
+             ),
+            blurRadius: 10.0,
+              spreadRadius: 2.0,
+            ), //BoxShadow
+            BoxShadow(
+          color: Colors.white,
+          offset: Offset(0.0, 0.0),
+          blurRadius: 0.0,
+          spreadRadius: 0.0,
+         ), //BoxShadow
+         ],
+          ),
+
+
+
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: 200,
+                  height: 200,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    backgroundImage: NetworkImage(image),
+                  ),
+                ),
+
+
+                Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    Container(
+                      height: 200,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(name,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontFamily: "Ubuntu",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+
+                              // SizedBox(
+                              //   width: 10,
+                              // ),
+                              IconButton(
+                                icon: Icon(Icons.close, color: Colors.black),
+                                onPressed: (){
+                                    ontap();
+                                },
+                              ),
+                            ],
+                          ),
+
+                            Text("Keya taste hain!",
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontFamily: "Ubuntu",
+                                //fontWeight: FontWeight.bold,
+                              ),
+                            ),
+
+                            Text("$price BDT",
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontFamily: "Ubuntu",
+                                //fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                // IconButton(onPressed: (){
+                                //   setState(() {
+                                //     quantity--;
+                                //   });
+                                // },
+                                //   icon: Icon(Icons.remove_circle_outline),
+                                //   color: const Color.fromARGB(255, 200, 15, 104),),
+                                Text("$quantity",
+                                  style: const TextStyle(
+                                    color: const Color.fromARGB(255, 200, 15, 104),
+                                    fontSize: 20,
+                                    fontFamily: "Ubuntu",
+                                    //fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                // IconButton(onPressed: (){
+                                //   //print(quantity);
+                                //   setState(() {
+                                //     quantity++;
+                                //   }
+                                //   );
+                                //   //print(quantity);
+                                // },
+                                //   icon: Icon(Icons.add_circle_outline_outlined),
+                                //   color: const Color.fromARGB(255, 200, 15, 104),)
+                              ],
+                            )
+                          ],
+                        ),
+
+                      ),
+
+                  ],
+                ),
+
+
+              ],
+
+            ),
+          ),
+
+      ],
+    );
+
+  }
+
   @override
   Widget build(BuildContext context) {
+    MyProvider provider= Provider.of<MyProvider>(context);
+    int total=provider.totalprice();
     return Scaffold(
 
 
@@ -19,7 +183,7 @@ class CartPage extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "total",
+              "$total BDT",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -45,7 +209,15 @@ class CartPage extends StatelessWidget{
             Icons.arrow_back,
             color: const Color.fromARGB(255, 200, 15, 104),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                builder: (context) => HomePage(),
+
+              ),
+            );
+          },
         ),
 
         title:Align(
@@ -65,114 +237,37 @@ class CartPage extends StatelessWidget{
               color: const Color.fromARGB(255, 200, 15, 104),
             ),
             onPressed: () {
-              // Add your shopping cart icon's functionality here.
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CartPage(),
+
+                ),
+              );
             },
           ),
         ],
 
       ),
 
+      body: ListView.builder(
+          itemCount: provider.cartList.length,
+          itemBuilder: (ctx,index){
+            provider.getDeleteIndex(index);
+           // print(provider.cartList[index].name);
+            return cartItem(
+                image: provider.cartList[index].image,
+                name: provider.cartList[index].name,
+                price: provider.cartList[index].price,
+                ontap: (){
+                  provider.delete();
+                },
+                quantity: provider.cartList[index].quantity,);
+          },
 
-
-      body: Container(
-        // margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
-        // padding: EdgeInsets.symmetric(horizontal: 10),
-        //height: 65,
-        decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(10)),
-        child: Expanded(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: 200,
-                    height: 200,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: AssetImage("Images/pasta.jpg"),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Stack(
-                      alignment: Alignment.topRight,
-                      children: [
-                        Container(
-                          height: 200,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Pasta",
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontFamily: "Ubuntu",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-
-                              Text("Keya taste hain!",
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontFamily: "Ubuntu",
-                                  //fontWeight: FontWeight.bold,
-                                ),
-                              ),
-
-                              Text("250 BDT",
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontFamily: "Ubuntu",
-                                  //fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Row(
-                                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  IconButton(onPressed: (){},
-                                      icon: Icon(Icons.remove_circle_outline),
-                                  color: const Color.fromARGB(255, 200, 15, 104),),
-                                  Text("1",
-                                    style: const TextStyle(
-                                        color: const Color.fromARGB(255, 200, 15, 104),
-                                      fontSize: 20,
-                                      fontFamily: "Ubuntu",
-                                      //fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  IconButton(onPressed: (){},
-                                      icon: Icon(Icons.add_circle_outline_outlined),
-                                    color: const Color.fromARGB(255, 200, 15, 104),)
-                                ],
-                              )
-                            ],
-                          ),
-
-                        ),
-                      IconButton(
-                      icon: Icon(Icons.close, color: Colors.black),
-                      onPressed: (){},
-                      ),
-                      ],
-                    ),
-                  )
-
-                ],
-              ),
-            ],
-          ),
-        ),
       ),
+
 
     );
   }
-  
 }
