@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage>{
               GestureDetector(
                 onTap: (){
                   ontap();
-                  print("hihihi");
+                //  print("hihihi");
                 },
                 child: Container(
                       
@@ -309,7 +309,7 @@ class _HomePageState extends State<HomePage>{
 
                     }
                   else if (name == 'Order') {
-                   
+                    
                   }
                   else if (name == 'About') {
                     
