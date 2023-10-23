@@ -345,6 +345,7 @@ Future<void> getAllFoodCategories() async {
   late int deleteIndex;
   void getDeleteIndex(int index){
       deleteIndex=index;
+     // print(deleteIndex);
   }
   void delete(){
     cartList.removeAt(deleteIndex);

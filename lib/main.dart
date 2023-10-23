@@ -1,5 +1,6 @@
 import 'package:delivro/Pages/Welcome_page.dart';
 import 'package:delivro/Pages/cart_page.dart';
+import 'package:delivro/Pages/profile_page.dart';
 import 'package:delivro/Provider/myProvider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

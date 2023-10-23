@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivro/Pages/FitScreen.dart';
 import 'package:delivro/Pages/LogIn_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 
 import 'widget/TextField.dart';
 
@@ -98,11 +100,11 @@ class _SignUpPageState extends State<SignUpPage>{
       sendData();
     }
   }
-
+//339 851
  
   @override
   Widget build(BuildContext context){
-    
+    FitScreen(context);
     return Scaffold(
       key:scaffoldMessengerKey,
       body: SingleChildScrollView(
@@ -110,8 +112,8 @@ class _SignUpPageState extends State<SignUpPage>{
         child: Column(
           children:[ 
             
-           const SizedBox(
-            height: 200,
+           SizedBox(
+            height: FitScreen.getPixelHeight(200),
             child: Image(image: AssetImage('Images/delivery_bro.png')),
           ),
           

@@ -20,147 +20,136 @@ class _CartPageState extends State<CartPage> {
     required Function ontap,
     required int quantity,
   }) {
-    return Row(
-      children: [
-        Container(
-            margin: EdgeInsets.only(bottom: 5, left: 5, right: 5),
-            padding: EdgeInsets.only(bottom: 20, left: 20, right: 5),
-            //height: 65,
-         // width: double.infinity ,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+    return Container(
+        margin: EdgeInsets.only(bottom: 5, left: 5, right: 5),
+        padding: EdgeInsets.only(bottom: 20, left: 20, right: 5),
+        //height: 65,
+     //width: double.infinity ,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
 
-                boxShadow: const [
-            BoxShadow(
-            color: Color.fromARGB(255, 95, 113, 187),
-            offset: Offset(
-            0.0,
-            0.0,
-             ),
-            blurRadius: 10.0,
-              spreadRadius: 2.0,
-            ), //BoxShadow
-            BoxShadow(
-          color: Colors.white,
-          offset: Offset(0.0, 0.0),
-          blurRadius: 0.0,
-          spreadRadius: 0.0,
-         ), //BoxShadow
-         ],
-          ),
+            boxShadow: const [
+        BoxShadow(
+        color: Color.fromARGB(255, 95, 113, 187),
+        offset: Offset(
+        0.0,
+        0.0,
+         ),
+        blurRadius: 10.0,
+          spreadRadius: 2.0,
+        ), //BoxShadow
+        BoxShadow(
+      color: Colors.white,
+      offset: Offset(0.0, 0.0),
+      blurRadius: 0.0,
+      spreadRadius: 0.0,
+     ), //BoxShadow
+     ],
+      ),
 
 
 
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: 200,
-                  height: 200,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    backgroundImage: NetworkImage(image),
-                  ),
-                ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              width: 100,
+              height: 100,
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                backgroundImage: NetworkImage(image),
+              ),
+            ),
 
 
-                Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    Container(
-                      height: 200,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(name,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontFamily: "Ubuntu",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-
-                              // SizedBox(
-                              //   width: 10,
-                              // ),
-                              IconButton(
-                                icon: Icon(Icons.close, color: Colors.black),
-                                onPressed: (){
-                                    ontap();
-                                },
-                              ),
-                            ],
-                          ),
-
-                            Text("Keya taste hain!",
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontFamily: "Ubuntu",
-                                //fontWeight: FontWeight.bold,
-                              ),
-                            ),
-
-                            Text("$price BDT",
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontFamily: "Ubuntu",
-                                //fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Row(
-                              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                // IconButton(onPressed: (){
-                                //   setState(() {
-                                //     quantity--;
-                                //   });
-                                // },
-                                //   icon: Icon(Icons.remove_circle_outline),
-                                //   color: const Color.fromARGB(255, 200, 15, 104),),
-                                Text("$quantity",
-                                  style: const TextStyle(
-                                    color: const Color.fromARGB(255, 200, 15, 104),
-                                    fontSize: 20,
-                                    fontFamily: "Ubuntu",
-                                    //fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                // IconButton(onPressed: (){
-                                //   //print(quantity);
-                                //   setState(() {
-                                //     quantity++;
-                                //   }
-                                //   );
-                                //   //print(quantity);
-                                // },
-                                //   icon: Icon(Icons.add_circle_outline_outlined),
-                                //   color: const Color.fromARGB(255, 200, 15, 104),)
-                              ],
-                            )
-                          ],
+            Container(
+              height: 200,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(name,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontFamily: "Ubuntu",
+                          fontWeight: FontWeight.bold,
                         ),
-
                       ),
 
+                      // SizedBox(
+                      //   width: 10,
+                      // ),
+                      IconButton(
+                        icon: Icon(Icons.close, color: Colors.black),
+                        onPressed: (){
+                            ontap();
+                        },
+                      ),
+                    ],
+                  ),
+
+                    Text("Keya taste hain!",
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                        fontFamily: "Ubuntu",
+                        //fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    Text("$price BDT",
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontFamily: "Ubuntu",
+                        //fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(
+                      //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // IconButton(onPressed: (){
+                        //   setState(() {
+                        //     quantity--;
+                        //   });
+                        // },
+                        //   icon: Icon(Icons.remove_circle_outline),
+                        //   color: const Color.fromARGB(255, 200, 15, 104),),
+                        Text("$quantity",
+                          style: const TextStyle(
+                            color: const Color.fromARGB(255, 200, 15, 104),
+                            fontSize: 20,
+                            fontFamily: "Ubuntu",
+                            //fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        // IconButton(onPressed: (){
+                        //   //print(quantity);
+                        //   setState(() {
+                        //     quantity++;
+                        //   }
+                        //   );
+                        //   //print(quantity);
+                        // },
+                        //   icon: Icon(Icons.add_circle_outline_outlined),
+                        //   color: const Color.fromARGB(255, 200, 15, 104),)
+                      ],
+                    )
                   ],
                 ),
 
+              ),
 
-              ],
 
-            ),
-          ),
+          ],
 
-      ],
-    );
+        ),
+      );
 
   }
 

@@ -1,5 +1,6 @@
 import 'package:delivro/Pages/categories.dart';
 import 'package:delivro/Pages/detailPage.dart';
+import 'package:delivro/Pages/profile_page.dart';
 import 'package:delivro/Pages/widget/bottom_container.dart';
 import 'package:delivro/Provider/myProvider.dart';
 import 'package:delivro/modles/categories_modle.dart';
@@ -7,6 +8,8 @@ import 'package:delivro/modles/food_categories_modle.dart';
 import 'package:delivro/modles/food_modle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'cart_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -282,6 +285,42 @@ class _HomePageState extends State<HomePage>{
                     fontSize: 15,
                     ),
                 ),
+
+                onTap: () {
+                  
+                  if (name == 'Profile') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProfilePage(),
+
+                      ),
+                    );
+
+                    }
+                  else if (name == 'Cart') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CartPage(),
+
+                      ),
+                    );
+
+                    }
+                  else if (name == 'Order') {
+                   
+                  }
+                  else if (name == 'About') {
+                    
+                  }
+                  else if (name == 'Change') {
+                    
+                  }
+                  else if (name == 'Log Out') {
+                    
+                  }
+                },
               );
   }
   
@@ -378,6 +417,7 @@ class _HomePageState extends State<HomePage>{
                    ),
                 ),
                 ),
+             
               drawerItem('Profile',Icons.person_2_outlined),
               drawerItem('Cart',Icons.add_shopping_cart_outlined),
               drawerItem('Order',Icons.shop_2_outlined),
