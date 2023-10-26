@@ -28,6 +28,8 @@ dependencies:
   lottie: ^1.1.0
   provider: ^6.0.5
 
+  fluttertoast: ^8.2.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivro/Pages/categories.dart';
 import 'package:delivro/Pages/detailPage.dart';
 import 'package:delivro/Pages/profile_page.dart';
@@ -6,20 +7,32 @@ import 'package:delivro/Provider/myProvider.dart';
 import 'package:delivro/modles/categories_modle.dart';
 import 'package:delivro/modles/food_categories_modle.dart';
 import 'package:delivro/modles/food_modle.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../modles/user.dart';
 import 'cart_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+   const HomePage({super.key});
 
-  
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage>{
+
+
+  Usermodle user = Usermodle();
+
+  Future<DocumentSnapshot> fetchData() async {
+    String? uid = FirebaseAuth.instance.currentUser?.uid;
+
+    return await FirebaseFirestore.instance.collection('userData').doc(uid).get();
+  }
+
 
   List<CategoriesModle> AllList=[];
   List<CategoriesModle> PizzaList=[];
@@ -383,327 +396,330 @@ class _HomePageState extends State<HomePage>{
     DrinksCategoriesList = provider.throwDrinksFoodList;
 
 
+
+
     return Scaffold(
-      drawer: Drawer(
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const UserAccountsDrawerHeader(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('Images/aaa.jpeg'),
-                    fit: BoxFit.cover,
+        drawer: Drawer(
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const UserAccountsDrawerHeader(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('Images/aaa.jpeg'),
+                      fit: BoxFit.cover,
+                      ),
+                  ),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundImage: AssetImage('Images/lina_1.jpg'),
+                  ),
+                  accountName: Text(
+                    "Nazira Jesmin Lina",
+                     style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Pacifico',
+                      fontSize: 20,
+                     ),
+                  ),
+                  accountEmail: Text(
+                    "nazirajesmin13@gmail.com",
+                     style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Pacifico',
+                      fontSize: 15,
+                     ),
+                  ),
+                  ),
+
+                drawerItem('Profile',Icons.person_2_outlined),
+                drawerItem('Cart',Icons.add_shopping_cart_outlined),
+                drawerItem('Order',Icons.shop_2_outlined),
+                drawerItem('About',Icons.info_outline_rounded),
+                const Divider(
+                  thickness: 2,
+                  color: Colors.black,
+                ),
+
+                const ListTile(
+                  leading: Text(
+                    'Communicate',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Pacifico',
+                      fontSize: 20,
                     ),
-                ),
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: AssetImage('Images/lina_1.jpg'),
-                ),
-                accountName: Text(
-                  "Nazira Jesmin Lina",
-                   style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Pacifico',
-                    fontSize: 20,
-                   ),
-                ),
-                accountEmail: Text(
-                  "nazirajesmin13@gmail.com",
-                   style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Pacifico',
-                    fontSize: 15,
-                   ),
-                ),
-                ),
-             
-              drawerItem('Profile',Icons.person_2_outlined),
-              drawerItem('Cart',Icons.add_shopping_cart_outlined),
-              drawerItem('Order',Icons.shop_2_outlined),
-              drawerItem('About',Icons.info_outline_rounded),
-              const Divider(
-                thickness: 2,
-                color: Colors.black,
-              ),
 
-              const ListTile(
-                leading: Text(
-                  'Communicate',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Pacifico',
-                    fontSize: 20,
                   ),
-              
                 ),
-              ),
 
-              drawerItem('Change',Icons.change_circle_outlined),
-              drawerItem('Log Out',Icons.logout_outlined),
+                drawerItem('Change',Icons.change_circle_outlined),
+                drawerItem('Log Out',Icons.logout_outlined),
 
-              
-        ],
-        )
+
+          ],
+          )
+          ),
         ),
-      ),
-      appBar: AppBar(
-        elevation: 0.0,
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.black,
-                size: 30, // Changing Drawer Icon Size
+        appBar: AppBar(
+          elevation: 0.0,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                  size: 30, // Changing Drawer Icon Size
+                ),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              );
+            },
+          ),
+
+
+          actions: const [
+            Padding(
+              padding: EdgeInsets.all(9.0),
+              child: CircleAvatar(
+              backgroundImage: AssetImage('Images/lina_1.jpg'),
+              )
               ),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            );
-          },
+
+          ],
         ),
 
 
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(9.0),
-            child: CircleAvatar(
-            backgroundImage: AssetImage('Images/lina_1.jpg'),
-            )
-            ),
-         
-        ],
-      ),
+
+        body: SingleChildScrollView(
 
 
-
-      body: SingleChildScrollView(
-
-
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal:10),
-          child: Column(
-            children: [
-              const SizedBox(
-                  height: 10,
-              ),
-               const Align(
-                alignment: Alignment.centerLeft,
-                 child: Text(
-                  
-                      "Hi,Are you Hungry?",
-                       style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Ubuntu',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-               
-                       ),
-               
-                       //textAlign: TextAlign.start,
-                       
-                             ),
-               ),
-             const SizedBox(
-                  height: 10,
-              ),
-             Container(
-              height: 60,
-              width: double.infinity,
-              margin:const EdgeInsets.only(left: 2,top: 5),
-              padding: const EdgeInsets.all(10),
-              //color:  Color.fromARGB(255, 200, 15, 104),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 200, 15, 104),
-                borderRadius: BorderRadius.circular(10),
-              ),
-             child: const Row(
-               children: [
-                Icon(
-                    Icons.discount_outlined,
-                    color: Colors.white,
-                ),
-                 Text(
-                        
-                        "12% off!\n12% off upto tk800. Min order tk500",
-                         style: TextStyle(
-                          color:Colors.white,
-                          //fontFamily: 'Ubuntu',
-                         fontWeight: FontWeight.bold,
-                          fontSize: 15,
-
-                         ),
-
-                         textAlign: TextAlign.left,
-                         
-                  ),
-               ],
-             ),
-             ),
-              const SizedBox(
-                  height: 20,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'What are you looking for?',
-                  hintStyle: const TextStyle(
-                    color: Colors.grey,
-                  ),
-                  prefixIcon: const Icon(Icons.search_outlined,color: Colors.black,),
-                  filled: true,
-                  fillColor: const Color.fromARGB(255, 230, 228, 228),
-                  border:OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromARGB(255, 59, 12, 229),
-                        strokeAlign: BorderSide.strokeAlignOutside,
-                        style: BorderStyle.solid,
-                        width: 20.0
-                        ),
-                    borderRadius:BorderRadius.circular(20)
-                    ),
-                ),
-              ),
-        
-      
-      
-      
-               const SizedBox(
-                    height: 40,
-                  ),
-      
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                      "What Are You Craving For?",
-                       style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Ubuntu',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                       ),
-                ),
-              ),
-      
-              const SizedBox(
-                    height: 20,
-                  ),
-      
-      
-              Row(
-                children: [
-      
-                 // All(),
-                  Pizza(),
-
-                  const SizedBox(
-                   width: 10,
-                  ),
-
-                  Burger(),
-
-                   const SizedBox(
-                   width: 10,
-                  ),
-
-                  Pasta(),
-                   const SizedBox(
-                   width: 10,
-                  ),
-
-                  
-                ],
-              ),
-      
-      
-        
-              const SizedBox(
-                    height: 20,
-                  ),
-      
-              Row(
-                children: [
-                  SetMenu(),
-                   const SizedBox(
-                   width: 10,
-                  ),
-                  Appetizer(),
-                   const SizedBox(
-                   width: 10,
-                  ),
-                  Dessert(),
-               
-                  
-                 
-                ],
-              ),
-      
-               const SizedBox(
-                    height: 20,
-                  ),
-                Row(
-                  children: [
-                    
-                     Drinks(),
-                  ],
-                ),
-                   const SizedBox(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal:10),
+            child: Column(
+              children: [
+                const SizedBox(
                     height: 10,
-                  ),
+                ),
                  const Align(
                   alignment: Alignment.centerLeft,
                    child: Text(
-                      "Recommended For you",
-                       style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Ubuntu',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                       ),
+
+                        "Hi,Are you Hungry?",
+                         style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+
+                         ),
+
+                         //textAlign: TextAlign.start,
+
                                ),
                  ),
-      
-
-
                const SizedBox(
-                    height: 20,
+                    height: 10,
+                ),
+               Container(
+                height: 60,
+                width: double.infinity,
+                margin:const EdgeInsets.only(left: 2,top: 5),
+                padding: const EdgeInsets.all(10),
+                //color:  Color.fromARGB(255, 200, 15, 104),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 200, 15, 104),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+               child: const Row(
+                 children: [
+                  Icon(
+                      Icons.discount_outlined,
+                      color: Colors.white,
                   ),
+                   Text(
 
+                          "12% off!\n12% off upto tk800. Min order tk500",
+                           style: TextStyle(
+                            color:Colors.white,
+                            //fontFamily: 'Ubuntu',
+                           fontWeight: FontWeight.bold,
+                            fontSize: 15,
 
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal, // Set the scroll direction to horizontal
-                    child: Row(
-                      children: [
-                        for (var e in AllCategoriesList)
-                          BottomContainer(
-                            e.image,
-                            e.name,
-                            e.price,
-                            () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DetailPage(
-                                    e.image,
-                                    e.name,
-                                    e.price,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                      ],
+                           ),
+
+                           textAlign: TextAlign.left,
+
                     ),
+                 ],
+               ),
+               ),
+                const SizedBox(
+                    height: 20,
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'What are you looking for?',
+                    hintStyle: const TextStyle(
+                      color: Colors.grey,
+                    ),
+                    prefixIcon: const Icon(Icons.search_outlined,color: Colors.black,),
+                    filled: true,
+                    fillColor: const Color.fromARGB(255, 230, 228, 228),
+                    border:OutlineInputBorder(
+                      borderSide: const BorderSide(color: Color.fromARGB(255, 59, 12, 229),
+                          strokeAlign: BorderSide.strokeAlignOutside,
+                          style: BorderStyle.solid,
+                          width: 20.0
+                          ),
+                      borderRadius:BorderRadius.circular(20)
+                      ),
                   ),
+                ),
 
-            ],
+
+
+
+                 const SizedBox(
+                      height: 40,
+                    ),
+
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                        "What Are You Craving For?",
+                         style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                         ),
+                  ),
+                ),
+
+                const SizedBox(
+                      height: 20,
+                    ),
+
+
+                Row(
+                  children: [
+
+                   // All(),
+                    Pizza(),
+
+                    const SizedBox(
+                     width: 10,
+                    ),
+
+                    Burger(),
+
+                     const SizedBox(
+                     width: 10,
+                    ),
+
+                    Pasta(),
+                     const SizedBox(
+                     width: 10,
+                    ),
+
+
+                  ],
+                ),
+
+
+
+                const SizedBox(
+                      height: 20,
+                    ),
+
+                Row(
+                  children: [
+                    SetMenu(),
+                     const SizedBox(
+                     width: 10,
+                    ),
+                    Appetizer(),
+                     const SizedBox(
+                     width: 10,
+                    ),
+                    Dessert(),
+
+
+
+                  ],
+                ),
+
+                 const SizedBox(
+                      height: 20,
+                    ),
+                  Row(
+                    children: [
+
+                       Drinks(),
+                    ],
+                  ),
+                     const SizedBox(
+                      height: 10,
+                    ),
+                   const Align(
+                    alignment: Alignment.centerLeft,
+                     child: Text(
+                        "Recommended For you",
+                         style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                         ),
+                                 ),
+                   ),
+
+
+
+                 const SizedBox(
+                      height: 20,
+                    ),
+
+
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal, // Set the scroll direction to horizontal
+                      child: Row(
+                        children: [
+                          for (var e in AllCategoriesList)
+                            BottomContainer(
+                              e.image,
+                              e.name,
+                              e.price,
+                              () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailPage(
+                                      e.image,
+                                      e.name,
+                                      e.price,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                        ],
+                      ),
+                    ),
+
+              ],
+            ),
           ),
         ),
-      ),
-      
-    
 
 
-    );
+
+
+      );
+
   }
 }

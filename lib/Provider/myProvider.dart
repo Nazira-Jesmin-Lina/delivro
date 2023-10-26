@@ -351,4 +351,11 @@ Future<void> getAllFoodCategories() async {
     cartList.removeAt(deleteIndex);
     notifyListeners();
   }
+
+  void clearCart() {
+    cartList.clear();
+    notifyListeners();
+  }
+
+
 }

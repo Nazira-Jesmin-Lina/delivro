@@ -4,7 +4,7 @@ class CartModle {
   final String image;
   final String name;
   final int price;
-  final int quantity;
+  late  int quantity;
 
   CartModle({
     required this.image,

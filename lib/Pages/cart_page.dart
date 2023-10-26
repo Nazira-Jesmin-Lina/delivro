@@ -5,7 +5,7 @@ import 'package:delivro/Provider/myProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 class CartPage extends StatefulWidget{
   @override
   State<CartPage> createState() => _CartPageState();
@@ -18,11 +18,13 @@ class _CartPageState extends State<CartPage> {
     required String name,
     required int price,
     required Function ontap,
+    required Function quantityDecrease,
+    required Function quantityIncrease,
     required int quantity,
   }) {
     return Container(
-        margin: EdgeInsets.only(bottom: 5, left: 5, right: 5),
-        padding: EdgeInsets.only(bottom: 20, left: 20, right: 5),
+        margin: EdgeInsets.only( left: 8, right: 8,top: 8),
+        padding: EdgeInsets.only(bottom: 10, left: 20, right: 5,top: 5),
         //height: 65,
      //width: double.infinity ,
         decoration: BoxDecoration(
@@ -113,13 +115,13 @@ class _CartPageState extends State<CartPage> {
                     Row(
                       //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        // IconButton(onPressed: (){
-                        //   setState(() {
-                        //     quantity--;
-                        //   });
-                        // },
-                        //   icon: Icon(Icons.remove_circle_outline),
-                        //   color: const Color.fromARGB(255, 200, 15, 104),),
+                        IconButton(onPressed: (){
+                          setState(() {
+                            if(quantity>1) quantityDecrease();
+                          });
+                        },
+                          icon: Icon(Icons.remove_circle_outline),
+                          color: const Color.fromARGB(255, 200, 15, 104),),
                         Text("$quantity",
                           style: const TextStyle(
                             color: const Color.fromARGB(255, 200, 15, 104),
@@ -128,16 +130,16 @@ class _CartPageState extends State<CartPage> {
                             //fontWeight: FontWeight.bold,
                           ),
                         ),
-                        // IconButton(onPressed: (){
-                        //   //print(quantity);
-                        //   setState(() {
-                        //     quantity++;
-                        //   }
-                        //   );
-                        //   //print(quantity);
-                        // },
-                        //   icon: Icon(Icons.add_circle_outline_outlined),
-                        //   color: const Color.fromARGB(255, 200, 15, 104),)
+                        IconButton(onPressed: (){
+                          //print(quantity);
+                          setState(() {
+                           quantityIncrease();
+                          }
+                          );
+                          //print(quantity);
+                        },
+                          icon: Icon(Icons.add_circle_outline_outlined),
+                          color: const Color.fromARGB(255, 200, 15, 104),)
                       ],
                     )
                   ],
@@ -156,38 +158,83 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     MyProvider provider= Provider.of<MyProvider>(context);
+
+    void checkout(BuildContext context) async {
+      // Show a loading state with circular progress indicator
+      showDialog(
+        context: context,
+        barrierDismissible: false, // Prevent users from dismissing the dialog
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(), // Circular progress indicator
+                SizedBox(height: 16), // Spacing
+                Text("Processing your order..."), // Loading text
+              ],
+            ),
+          );
+        },
+      );
+
+      // Simulate a loading delay (you can replace this with actual checkout logic)
+      await Future.delayed(Duration(seconds: 2));
+
+      // Close the loading dialog
+      Navigator.of(context, rootNavigator: true).pop();
+
+      // Show a toast message for checkout success
+      Fluttertoast.showToast(
+        msg: "Checkout Successful",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.grey, // You can customize this
+        textColor: Colors.white, // You can customize this
+        fontSize: 20, // You can customize this
+      );
+
+      // Clear the cart list after a successful checkout
+      provider.clearCart();
+    }
+
     int total=provider.totalprice();
     return Scaffold(
 
 
-      bottomNavigationBar: Container(
+      bottomNavigationBar: GestureDetector(
+        onTap: (){
+          checkout(context);
+        },
+        child: Container(
 
-        margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        height: 65,
-        decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 200, 15, 104),
-            borderRadius: BorderRadius.circular(10)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "$total BDT",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontFamily: "Ubuntu"
+          margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          height: 65,
+          decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 200, 15, 104),
+              borderRadius: BorderRadius.circular(10)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "$total BDT",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontFamily: "Ubuntu"
+                ),
               ),
-            ),
-            Text(
-              "Check Out",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontFamily: "Ubuntu",
-                  fontWeight: FontWeight.bold),
-            )
-          ],
+              Text(
+                "Check Out",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontFamily: "Ubuntu",
+                    fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
         ),
       ),
       appBar: AppBar(
@@ -248,9 +295,18 @@ class _CartPageState extends State<CartPage> {
                 image: provider.cartList[index].image,
                 name: provider.cartList[index].name,
                 price: provider.cartList[index].price,
+
                 ontap: (){
+                  provider.getDeleteIndex(index);
                   provider.delete();
                 },
+                quantityDecrease: (){
+                  provider.cartList[index].quantity--;
+                },
+
+              quantityIncrease: (){
+                provider.cartList[index].quantity++;
+              },
                 quantity: provider.cartList[index].quantity,);
           },
 
