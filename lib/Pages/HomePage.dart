@@ -27,11 +27,35 @@ class _HomePageState extends State<HomePage>{
 
   Usermodle user = Usermodle();
 
-  Future<DocumentSnapshot> fetchData() async {
+  Future<void> fetchData() async {
+    // Assuming you are using Firebase Firestore
     String? uid = FirebaseAuth.instance.currentUser?.uid;
 
-    return await FirebaseFirestore.instance.collection('userData').doc(uid).get();
+
+    FirebaseFirestore.instance.collection('userData').doc(uid).get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        // Get the data from Firestore
+       // print('yes in\n');
+        final data = documentSnapshot.data() as Map<String, dynamic>;
+
+        user.name = data['name'].toString();
+        user.email = data['email'].toString();
+        user.location=data['loaction'].toString();
+        user.phone=data['phone'].toString();
+
+        //here user has data.
+        //print(user.email);
+
+
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
+
+
   }
+
 
 
   List<CategoriesModle> AllList=[];
@@ -340,6 +364,7 @@ class _HomePageState extends State<HomePage>{
   @override
   Widget build(BuildContext context){
     MyProvider provider=Provider.of<MyProvider>(context);
+    fetchData();
     //1st//
     provider.getCategories();
     AllList = provider.throwList;
@@ -405,7 +430,7 @@ class _HomePageState extends State<HomePage>{
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const UserAccountsDrawerHeader(
+                 UserAccountsDrawerHeader(
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('Images/aaa.jpeg'),
@@ -416,7 +441,7 @@ class _HomePageState extends State<HomePage>{
                     backgroundImage: AssetImage('Images/lina_1.jpg'),
                   ),
                   accountName: Text(
-                    "Nazira Jesmin Lina",
+                    user.name ?? "Default Name",
                      style: TextStyle(
                       color: Colors.black,
                       fontFamily: 'Pacifico',
@@ -424,7 +449,7 @@ class _HomePageState extends State<HomePage>{
                      ),
                   ),
                   accountEmail: Text(
-                    "nazirajesmin13@gmail.com",
+                    user.email?? "Default email",
                      style: TextStyle(
                       color: Colors.black,
                       fontFamily: 'Pacifico',

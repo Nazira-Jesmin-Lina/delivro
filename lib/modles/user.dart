@@ -1,9 +1,9 @@
 class Usermodle {
-  late String image;
-  late String name;
-  late String phone;
-  late String email;
-  late String location;
+   late String image;
+   String name='Name';
+   String phone='+880131';
+   String email='@gmail.com';
+   String location='Dhaka';
 
 
 }

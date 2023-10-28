@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../modles/user.dart';
 import 'FitScreen.dart';
@@ -59,7 +62,7 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
         ),
-        actions: const [
+        actions:  const [
           Padding(
             padding: EdgeInsets.all(9.0),
             child: CircleAvatar(
@@ -84,9 +87,38 @@ class ProfilePage extends StatelessWidget {
                 padding: EdgeInsets.all(16.0),
                 child: Column(
                   children: <Widget>[
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage('Images/burger.jpg'),
+                   Stack(
+                      alignment: AlignmentDirectional.bottomEnd,
+
+                      children: [
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundImage: AssetImage('Images/burger.jpg'),
+                        ),
+                        // SizedBox(
+                        //   height: FitScreen.getPixelHeight(-20),
+                        // ),
+                        // IconButton(
+                        //   onPressed: () async {
+                        //     final picker = ImagePicker();
+                        //     final pickedFile = await picker.getImage(source: ImageSource.gallery); // Use ImageSource.camera for the camera
+                        //
+                        //     if (pickedFile != null) {
+                        //       // A file was picked; you can use pickedFile.path to access the selected image
+                        //       // You can then use this image path to update the profile picture
+                        //       // Example: updateProfilePicture(pickedFile.path);
+                        //     } else {
+                        //       // User canceled image selection
+                        //     }
+                        //   },
+                        //   icon: Icon(
+                        //     Icons.add_a_photo_rounded,
+                        //     color: Colors.grey,
+                        //     size: FitScreen.getPixelHeight(40),
+                        //   ),
+                        // )
+
+                      ],
                     ),
                     SizedBox(height: FitScreen.getPixelHeight(16)),
                     Text(
