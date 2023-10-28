@@ -1,13 +1,17 @@
 import 'dart:ffi';
 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../modles/user.dart';
 import 'FitScreen.dart';
 import 'HomePage.dart';
+import 'dart:io';
 
 
 class ProfilePage extends StatelessWidget {
@@ -98,25 +102,42 @@ class ProfilePage extends StatelessWidget {
                         // SizedBox(
                         //   height: FitScreen.getPixelHeight(-20),
                         // ),
-                        // IconButton(
-                        //   onPressed: () async {
-                        //     final picker = ImagePicker();
-                        //     final pickedFile = await picker.getImage(source: ImageSource.gallery); // Use ImageSource.camera for the camera
-                        //
-                        //     if (pickedFile != null) {
-                        //       // A file was picked; you can use pickedFile.path to access the selected image
-                        //       // You can then use this image path to update the profile picture
-                        //       // Example: updateProfilePicture(pickedFile.path);
-                        //     } else {
-                        //       // User canceled image selection
-                        //     }
-                        //   },
-                        //   icon: Icon(
-                        //     Icons.add_a_photo_rounded,
-                        //     color: Colors.grey,
-                        //     size: FitScreen.getPixelHeight(40),
-                        //   ),
-                        // )
+                        IconButton(
+                          onPressed: () async {
+                            final imagePicker = ImagePicker();
+                            final XFile? pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+
+                            if (pickedFile != null) {
+                              File file = File(pickedFile.path);
+
+                              // Get the reference to the Firebase Storage bucket
+                              final FirebaseStorage storage = FirebaseStorage.instance;
+                              Reference storageRef = storage.ref().child('images/${DateTime.now()}.jpg');
+
+                              UploadTask uploadTask = storageRef.putFile(file);
+
+                              // Monitor the upload task
+                              TaskSnapshot snapshot = await uploadTask;
+                              if (snapshot.state == TaskState.success) {
+                                // The image was successfully uploaded. You can get its download URL.
+                                String downloadUrl = await snapshot.ref.getDownloadURL();
+                                print("Image uploaded to Firebase Storage. Download URL: $downloadUrl");
+                              } else {
+                                // Handle the upload failure.
+                                print("Image upload failed.");
+                              }
+                            } else {
+                              // Handle no image selected from the gallery.
+                              print("No image selected.");
+                            }
+                          },
+                          icon: Icon(
+                            Icons.add_a_photo_rounded,
+                            color: Colors.grey,
+                            size: FitScreen.getPixelHeight(40),
+                          ),
+                        )
+
 
                       ],
                     ),
