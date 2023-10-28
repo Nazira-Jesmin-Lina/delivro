@@ -36,6 +36,12 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     FitScreen(context);
 
+    //Dipto ei image ta replace korbi
+
+    String image='https://thecozycook.com/wp-content/uploads/2020/02/Copycat-McDonalds-French-Fries-.jpg';
+
+
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -97,7 +103,7 @@ class ProfilePage extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 60,
-                          backgroundImage: AssetImage('Images/burger.jpg'),
+                          backgroundImage: NetworkImage(image),
                         ),
                         // SizedBox(
                         //   height: FitScreen.getPixelHeight(-20),
@@ -122,6 +128,10 @@ class ProfilePage extends StatelessWidget {
                                 // The image was successfully uploaded. You can get its download URL.
                                 String downloadUrl = await snapshot.ref.getDownloadURL();
                                 print("Image uploaded to Firebase Storage. Download URL: $downloadUrl");
+                                String? uid = FirebaseAuth.instance.currentUser?.uid;
+                                FirebaseFirestore.instance.collection('userData').doc(uid).set({
+                                  'image':downloadUrl
+                                });
                               } else {
                                 // Handle the upload failure.
                                 print("Image upload failed.");
