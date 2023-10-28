@@ -92,6 +92,13 @@ class ProfilePage extends StatelessWidget {
               user.email = data['email'].toString();
               user.location = data['location'].toString();
               user.phone = data['phone'].toString();
+              user.image=data['image'].toString();
+              user.password=data['password'].toString();
+              user.userID=data['userID'].toString();
+              if (user.image!="null")
+              {
+                image=user.image;
+              }
 
               return Container(
                 padding: EdgeInsets.all(16.0),
@@ -129,9 +136,16 @@ class ProfilePage extends StatelessWidget {
                                 String downloadUrl = await snapshot.ref.getDownloadURL();
                                 print("Image uploaded to Firebase Storage. Download URL: $downloadUrl");
                                 String? uid = FirebaseAuth.instance.currentUser?.uid;
-                                FirebaseFirestore.instance.collection('userData').doc(uid).set({
-                                  'image':downloadUrl
-                                });
+                                image=downloadUrl;
+                               FirebaseFirestore.instance.collection('userData').doc(uid).set({
+                                'email': user.email,
+                                'name': user.name,
+                                'password': user.password,
+                                'userID': user.userID,
+                                'image':downloadUrl,
+                                'location': user.location,
+                                'phone':user.phone
+                              });
                               } else {
                                 // Handle the upload failure.
                                 print("Image upload failed.");

@@ -36,7 +36,10 @@ class _SignUpPageState extends State<SignUpPage>{
           'email': Email.text.trim(),
           'name': Name.text.trim(),
           'password': Password.text.trim(),
-          'userID': userCredential.user!.uid
+          'userID': userCredential.user!.uid,
+          'image': "null",
+          'location':"dhaka",
+          'phone':"0178"
         });
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Account successfully Created, Please Log in to continue. ')));
         Navigator.pushReplacement(
