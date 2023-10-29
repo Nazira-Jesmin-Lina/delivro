@@ -1,4 +1,5 @@
 import 'package:delivro/Pages/LogIn_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer'; // Step 1
 
@@ -65,7 +66,20 @@ class ForgetPasswordPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Step 3: Log the text entered in the TextFormField
-                log('Entered email: ${emailController.text}');//ekhane terminal e print hocche
+                try {
+                      FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.toString());
+                      print("Password reset email sent");
+                    } catch (e) {
+                      print("Error sending password reset email: $e");
+                    }
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Password Reset Email Sent Succesfully.')));
+
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>const LogInPage(),
+                      ),
+                    );
               },
               child: Text('Reset Password'),
             ),

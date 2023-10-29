@@ -366,15 +366,21 @@ class _HomePageState extends State<HomePage>{
                   }
                   else if (name == 'Log Out') {
 
-                    FirebaseAuth.instance.signOut();
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Log Out Successfull')));
+                   try {
+                      FirebaseAuth.instance.signOut();
+                      print("User logged out");
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Log Out Successfull')));
 
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>const LogInPage(),
-                      ),
-                    );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>const LogInPage(),
+                        ),
+                      );
+                    } catch (e) {
+                      print("Error signing out: $e");
+                    }
+                    
 
                   }
                 },
