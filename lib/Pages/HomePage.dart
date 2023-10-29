@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivro/Pages/LogIn_page.dart';
 import 'package:delivro/Pages/categories.dart';
 import 'package:delivro/Pages/detailPage.dart';
 import 'package:delivro/Pages/profile_page.dart';
@@ -356,7 +357,23 @@ class _HomePageState extends State<HomePage>{
                     
                   }
                   else if (name == 'Log Out') {
-                    
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => CartPage(),
+
+                    //   ),
+                    // );
+                    FirebaseAuth.instance.signOut();
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Log Out Successfull')));
+
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>const LogInPage(),
+                      ),
+                    );
+
                   }
                 },
               );
