@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:delivro/Pages/LogIn_page.dart';
+import 'package:delivro/Pages/Order_history.dart';
 import 'package:delivro/Pages/categories.dart';
 import 'package:delivro/Pages/detailPage.dart';
 import 'package:delivro/Pages/profile_page.dart';
@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../modles/user.dart';
+import 'LogIn_page.dart';
 import 'cart_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -348,6 +349,13 @@ class _HomePageState extends State<HomePage>{
 
                     }
                   else if (name == 'Order') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OrderHistoryPage(),
+
+                      ),
+                    );
                     
                   }
                   else if (name == 'About') {
@@ -357,17 +365,11 @@ class _HomePageState extends State<HomePage>{
                     
                   }
                   else if (name == 'Log Out') {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => CartPage(),
 
-                    //   ),
-                    // );
                     FirebaseAuth.instance.signOut();
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Log Out Successfull')));
 
-                     Navigator.push(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) =>const LogInPage(),
