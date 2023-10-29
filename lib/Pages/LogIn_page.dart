@@ -1,4 +1,5 @@
 
+import 'package:delivro/Pages/forget_password.dart';
 import 'package:delivro/Pages/widget/TextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -131,7 +132,7 @@ class _LogInPageState extends State<LogInPage> {
         const SizedBox(
               height: 5,
               ),
-        const SizedBox(
+         SizedBox(
           height: 50,
           child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -148,13 +149,21 @@ class _LogInPageState extends State<LogInPage> {
             // ),
             Align(
               alignment: Alignment.topRight,
-              child: Text(
-                'Forget Password?  ',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 200, 15, 104),
-                  fontSize: 20,
-                  fontFamily: "Pacifico",
-                  decoration: TextDecoration.underline,
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ForgetPasswordPage()),
+                  );
+                },
+                child: Text(
+                  'Forget Password?  ',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 200, 15, 104),
+                    fontSize: 20,
+                    fontFamily: "Pacifico",
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
               ),
             ),

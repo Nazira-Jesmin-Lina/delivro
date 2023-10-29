@@ -1,6 +1,7 @@
 import 'package:delivro/Pages/cart_page.dart';
 import 'package:delivro/Pages/widget/bottom_container.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:delivro/Provider/myProvider.dart';
 
@@ -94,17 +95,46 @@ class _DetailPageState extends State<DetailPage> {
             width: 40,
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               provider.addToCart(image: widget.image,
                   name: widget.name,
                   price: widget.price,
                   quantity: quantity,);
 
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => CartPage(),
-                ),
+              showDialog(
+                context: context,
+                barrierDismissible: false, // Prevent users from dismissing the dialog
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CircularProgressIndicator(), // Circular progress indicator
+                        SizedBox(height: 16), // Spacing
+                        Text("Processing your order..."), // Loading text
+                      ],
+                    ),
+                  );
+                },
               );
+
+              // Simulate a loading delay (you can replace this with actual checkout logic)
+              await Future.delayed(Duration(seconds: 2));
+
+              // Close the loading dialog
+              Navigator.of(context, rootNavigator: true).pop();
+
+              // Show a toast message for checkout success
+              Fluttertoast.showToast(
+                msg: "ADD item successfully to your cart",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.grey, // You can customize this
+                textColor: Colors.white, // You can customize this
+                fontSize: 20, // You can customize this
+              );
+
+              quantity=1;
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 200, 15, 104),

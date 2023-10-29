@@ -43,6 +43,7 @@ class _HomePageState extends State<HomePage>{
         user.email = data['email'].toString();
         user.location=data['loaction'].toString();
         user.phone=data['phone'].toString();
+        user.image=data['image'].toString();
 
         //here user has data.
         //print(user.email);
@@ -433,12 +434,13 @@ class _HomePageState extends State<HomePage>{
                  UserAccountsDrawerHeader(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('Images/aaa.jpeg'),
-                      fit: BoxFit.cover,
+                      image: AssetImage('Images/navi_img.jpg'),
+                      fit: BoxFit.fitHeight,
                       ),
                   ),
                   currentAccountPicture: CircleAvatar(
-                    backgroundImage: AssetImage('Images/lina_1.jpg'),
+                    backgroundImage: NetworkImage(user.image),
+                    backgroundColor: Colors.white,
                   ),
                   accountName: Text(
                     user.name ?? "Default Name",
@@ -506,12 +508,24 @@ class _HomePageState extends State<HomePage>{
           ),
 
 
-          actions: const [
+          actions:  [
             Padding(
               padding: EdgeInsets.all(9.0),
-              child: CircleAvatar(
-              backgroundImage: AssetImage('Images/lina_1.jpg'),
-              )
+              child: IconButton(
+                icon: Icon(
+                  Icons.shopping_cart,
+                  color: const Color.fromARGB(255, 200, 15, 104),
+                ),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CartPage(),
+
+                    ),
+                  );
+                },
+              ),
               ),
 
           ],

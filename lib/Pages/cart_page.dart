@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:delivro/Pages/HomePage.dart';
+import 'package:delivro/Pages/Processign_order.dart';
 import 'package:delivro/Provider/myProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -196,6 +197,12 @@ class _CartPageState extends State<CartPage> {
 
       // Clear the cart list after a successful checkout
       provider.clearCart();
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => MyOrderProcessingPage(),
+        ),
+      );
     }
 
     int total=provider.totalprice();
@@ -205,6 +212,7 @@ class _CartPageState extends State<CartPage> {
       bottomNavigationBar: GestureDetector(
         onTap: (){
           checkout(context);
+
         },
         child: Container(
 

@@ -13,8 +13,10 @@ import 'FitScreen.dart';
 import 'HomePage.dart';
 import 'dart:io';
 
+import 'cart_page.dart';
 
-class ProfilePage extends StatelessWidget {
+
+class ProfilePage extends StatefulWidget {
   // Create a private constructor for the Singleton pattern
   ProfilePage._internal();
 
@@ -24,6 +26,11 @@ class ProfilePage extends StatelessWidget {
   // Factory constructor to return the instance
   factory ProfilePage() => _instance;
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   Usermodle user = Usermodle();
 
   Future<DocumentSnapshot> fetchData() async {
@@ -36,9 +43,9 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     FitScreen(context);
 
-    //Dipto ei image ta replace korbi
 
-    String image='https://thecozycook.com/wp-content/uploads/2020/02/Copycat-McDonalds-French-Fries-.jpg';
+
+    String image='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=740&t=st=1698582431~exp=1698583031~hmac=f47b3627c16793133ebb205701358b6c7476345c1d2dbb6ffd600a2efe406a0b';
 
 
 
@@ -72,11 +79,23 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
         ),
-        actions:  const [
+        actions:   [
           Padding(
             padding: EdgeInsets.all(9.0),
-            child: CircleAvatar(
-              backgroundImage: AssetImage('Images/lina_1.jpg'),
+            child:IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+                color: const Color.fromARGB(255, 200, 15, 104),
+              ),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartPage(),
+
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -111,6 +130,7 @@ class ProfilePage extends StatelessWidget {
                         CircleAvatar(
                           radius: 60,
                           backgroundImage: NetworkImage(image),
+                          backgroundColor: Colors.white,
                         ),
                         // SizedBox(
                         //   height: FitScreen.getPixelHeight(-20),
@@ -125,7 +145,8 @@ class ProfilePage extends StatelessWidget {
 
                               // Get the reference to the Firebase Storage bucket
                               final FirebaseStorage storage = FirebaseStorage.instance;
-                              Reference storageRef = storage.ref().child('images/${DateTime.now()}.jpg');
+                              Reference storageRef = storage.ref().child('images/${DateTime.now()}');
+
 
                               UploadTask uploadTask = storageRef.putFile(file);
 
@@ -136,16 +157,18 @@ class ProfilePage extends StatelessWidget {
                                 String downloadUrl = await snapshot.ref.getDownloadURL();
                                 print("Image uploaded to Firebase Storage. Download URL: $downloadUrl");
                                 String? uid = FirebaseAuth.instance.currentUser?.uid;
-                                image=downloadUrl;
-                               FirebaseFirestore.instance.collection('userData').doc(uid).set({
-                                'email': user.email,
-                                'name': user.name,
-                                'password': user.password,
-                                'userID': user.userID,
-                                'image':downloadUrl,
-                                'location': user.location,
-                                'phone':user.phone
-                              });
+
+                                // Update the user's image URL in Firestore
+                                FirebaseFirestore.instance.collection('userData').doc(uid).update({
+                                  'image': downloadUrl,
+                                }).then((value) {
+                                  // Update the widget with the new image URL
+                                  setState(() {
+                                    image = downloadUrl;
+                                  });
+                                }).catchError((error) {
+                                  print("Error updating image URL: $error");
+                                });
                               } else {
                                 // Handle the upload failure.
                                 print("Image upload failed.");
@@ -187,12 +210,7 @@ class ProfilePage extends StatelessWidget {
                       title: Text(user.location),
                     ),
                     SizedBox(height: FitScreen.getPixelHeight(16)),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Handle button press (e.g., edit profile).
-                      },
-                      child: Text('Edit Profile'),
-                    ),
+
                   ],
                 ),
               );
