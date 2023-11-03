@@ -25,6 +25,8 @@ class _SignUpPageState extends State<SignUpPage>{
   TextEditingController Name= TextEditingController();
   TextEditingController Password =TextEditingController();
   TextEditingController confirm_pass= TextEditingController();
+  TextEditingController location =TextEditingController();
+  TextEditingController phone =TextEditingController();
 
   final scaffoldMessengerKey=GlobalKey<ScaffoldMessengerState>();
 
@@ -38,8 +40,8 @@ class _SignUpPageState extends State<SignUpPage>{
           'password': Password.text.trim(),
           'userID': userCredential.user!.uid,
           'image': "null",
-          'location':"dhaka",
-          'phone':"0178"
+          'location':location.text.trim(),
+          'phone':phone.text.trim(),
         });
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Account successfully Created, Please Log in to continue. ')));
         Navigator.pushReplacement(
@@ -87,6 +89,17 @@ class _SignUpPageState extends State<SignUpPage>{
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Name field is empty')));
       return;
     }
+
+    if (location.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('location field is empty')));
+      return;
+    }
+
+    if (phone.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('phone field is empty')));
+      return;
+    }
+
 
     if (Password.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Password field is empty')));
@@ -159,20 +172,39 @@ class _SignUpPageState extends State<SignUpPage>{
                 height: 20,
                 ),
               MyTextField(
-              '  Password',
-              Icons.lock,
-              true,
-              Password,
+              ' location',
+              Icons.location_city_outlined,
+              false,
+              location,
               ),
               
               const SizedBox(
               height: 20,
               ),
               MyTextField(
-              '  Confirm Password',
-              Icons.lock,
-              true,
-              confirm_pass,
+              '  Phone Number',
+              Icons.phone,
+              false,
+              phone,
+              ),
+
+              const SizedBox(
+                height: 20,
+              ),
+              MyTextField(
+                '  Password',
+                Icons.lock,
+                true,
+                Password,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              MyTextField(
+                '  Confirm Password',
+                Icons.lock,
+                true,
+                confirm_pass,
               )
         
             ],
