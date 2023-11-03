@@ -8,6 +8,19 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'widget/TextField.dart';
 
+abstract class EmailValidationStrategy {
+  bool validateEmail(String email);
+}
+
+class RegexEmailValidationStrategy extends EmailValidationStrategy {
+  @override
+  bool validateEmail(String email) {
+    RegExp regExp = RegExp(r'^[a-zA-Z0-9._%+-]+@gmail\.com$');
+    return regExp.hasMatch(email);
+  }
+}
+
+
 class SignUpPage extends StatefulWidget {
   static Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -17,9 +30,49 @@ class SignUpPage extends StatefulWidget {
   _SignUpPageState createState() => _SignUpPageState();
 }
 
+
+
+abstract class SignUpTemplate {
+  Future signUp(
+      String email, String name, String password, String location, String phone);
+}
+
+
+
+class FirebaseSignUp extends SignUpTemplate {
+  @override
+  Future signUp(
+      String email, String name, String password, String location, String phone) async {
+    try {
+      final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseFirestore.instance.collection('userData').doc(userCredential.user!.uid).set({
+        'email': email.trim(),
+        'name': name.trim(),
+        'password': password.trim(),
+        'userID': userCredential.user!.uid,
+        'image': "null",
+        'location': location.trim(),
+        'phone': phone.trim(),
+      });
+    } on FirebaseAuthException catch (e) {
+      throw e;
+    } catch (e) {
+      throw e;
+    }
+  }
+}
+
+
+
+
+
+
 class _SignUpPageState extends State<SignUpPage>{
   // String regExpPattern = SignUpPage.pattern;
   // RegExp regExp = RegExp(regExpPattern);
+
+  SignUpTemplate signUpTemplate = FirebaseSignUp();
   bool loading=false;
   TextEditingController Email= TextEditingController();
   TextEditingController Name= TextEditingController();
@@ -30,57 +83,56 @@ class _SignUpPageState extends State<SignUpPage>{
 
   final scaffoldMessengerKey=GlobalKey<ScaffoldMessengerState>();
 
-  Future sendData() async{
+  Future sendData(SignUpTemplate signUpTemplate) async{
    try {
-        final userCredential= await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: Email.text,password: Password.text );
-        FirebaseFirestore.instance.collection('userData').doc(userCredential.user!.uid).set({
-          'email': Email.text.trim(),
-          'name': Name.text.trim(),
-          'password': Password.text.trim(),
-          'userID': userCredential.user!.uid,
-          'image': "null",
-          'location':location.text.trim(),
-          'phone':phone.text.trim(),
-        });
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Account successfully Created, Please Log in to continue. ')));
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const LogInPage()),
-          );
-      
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('The password provided is too weak.')));
-        // print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('The account already exists for that email.')));
+     await signUpTemplate.signUp(
+         Email.text,
+         Name.text,
+         Password.text,
+         location.text,
+         phone.text);
+
+     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Account successfully Created, Please Log in to continue. ')));
+     Navigator.pushReplacement(
+       context,
+       MaterialPageRoute(builder: (context) => const LogInPage()),
+     );
+
+   } on FirebaseAuthException catch (e) {
+     if (e.code == 'weak-password') {
+
+       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('The password provided is too weak.')));
+       // print('The password provided is too weak.');
+       setState(() {
+         loading = false;
+       });
+
+     } else if (e.code == 'email-already-in-use') {
+       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('The account already exists for that email.')));
+       setState(() {
+         loading = false;
+       });
 
        // print('The account already exists for that email.');
-      }
-    } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-        setState(() {
-        loading=false;
-      });
+     }
+   } catch (e) {
+     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+     setState(() {
+       loading = false;
+     });
 
     }
-    setState(() {
-        loading=false;
-      });
+
 
   }
-  void validation(BuildContext context) {
-    RegExp regExp = RegExp(
-    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
-     );
+  void validation(BuildContext context, SignUpTemplate signUpTemplate){
+    EmailValidationStrategy emailValidationStrategy = RegexEmailValidationStrategy();
     if (Email.text.trim().isEmpty ) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Email field is empty')));
       return;
     }
 
-    else if(!regExp.hasMatch(Email.text)){
+    else if(!emailValidationStrategy.validateEmail(Email.text)){
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter the valied email')));
       return;
     }
@@ -110,11 +162,15 @@ class _SignUpPageState extends State<SignUpPage>{
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('confirm password field is empty')));
       return;
     }
+    if (Password.text!=confirm_pass.text) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Password is not matched.please rewrite it')));
+      return;
+    }
     else{
       setState(() {
         loading=true;
       });
-      sendData();
+      sendData(signUpTemplate);
     }
   }
 //339 851
@@ -221,7 +277,7 @@ class _SignUpPageState extends State<SignUpPage>{
               width: 150,
               child:ElevatedButton(
                 onPressed: () {
-                  validation(context);
+                  validation(context,signUpTemplate);
                   // ScaffoldMessenger.of(context).showSnackBar(
                   //         const SnackBar(content: Text('Sign Up Successful')));
                   // Navigator.pop(context);

@@ -7,6 +7,12 @@ import 'SignUp.dart';
 import 'HomePage.dart';
 
 
+
+
+
+
+
+
 class LogInPage extends StatefulWidget{
   
   static Pattern pattern =
@@ -17,6 +23,11 @@ class LogInPage extends StatefulWidget{
   @override
   State<LogInPage> createState() => _LogInPageState();
 }
+
+
+
+
+
 
 class _LogInPageState extends State<LogInPage> {
   bool loadding=false;
