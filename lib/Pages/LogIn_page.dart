@@ -1,13 +1,11 @@
 
 import 'package:delivro/Pages/forget_password.dart';
 import 'package:delivro/Pages/widget/TextField.dart';
+import 'package:delivro/modles/LogIn_template.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'SignUp.dart';
 import 'HomePage.dart';
-
-
-
 
 
 
@@ -20,16 +18,17 @@ class LogInPage extends StatefulWidget{
 
   const LogInPage({super.key});
 
+
   @override
   State<LogInPage> createState() => _LogInPageState();
+
 }
 
 
 
-
-
-
 class _LogInPageState extends State<LogInPage> {
+
+
   bool loadding=false;
   //RegExp regExp = RegExp(LogInPage.pattern);
   bool loading=false;
@@ -37,37 +36,70 @@ class _LogInPageState extends State<LogInPage> {
   TextEditingController password=TextEditingController();
   final scaffoldMessengerKey=GlobalKey<ScaffoldMessengerState>();
 
-  Future loginAuth() async{
-    try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email.text,
-        password: password.text
-      );
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Successfull')));
-      Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
-    } on FirebaseAuthException catch (e) {
-      print('hhhhhhhh');
-      if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No user found for that email.')));
 
-      } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Wrong password provided for that user.')));
-      }
-      else
-      {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Invalid Credentials.')));
-      }
-      setState(() {
-        loading=false;
-      });
-    }
+  // Future loginAuth() async {
+  //   LoginTemplate loginTemplate = FirebaseLogin(context);
+  //
+  //   setState(() {
+  //     loading = true;
+  //   });
+  //
+  //   loginTemplate.login(context, email.text, password.text, (bool isSuccessful) {
+  //     setState(() {
+  //       loading = false;
+  //     });
+  //
+  //     if (isSuccessful) {
+  //       // Handle successful login
+  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Successful')));
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => const HomePage()),
+  //       );
+  //     } else {
+  //       // Handle login failure
+  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Failed')));
+  //     }
+  //   });
+  // }
 
-  }
 
-  void validation() {
+
+
+  // Future loginAuth() async{
+  //
+  //
+  //
+  //   try {
+  //     final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //       email: email.text,
+  //       password: password.text
+  //     );
+  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Successfull')));
+  //     Navigator.pushReplacement(
+  //           context,
+  //           MaterialPageRoute(builder: (context) => const HomePage()),
+  //         );
+  //   } on FirebaseAuthException catch (e) {
+  //     print('hhhhhhhh');
+  //     if (e.code == 'user-not-found') {
+  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No user found for that email.')));
+  //
+  //     } else if (e.code == 'wrong-password') {
+  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Wrong password provided for that user.')));
+  //     }
+  //     else
+  //     {
+  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Invalid Credentials.')));
+  //     }
+  //     setState(() {
+  //       loading=false;
+  //     });
+  //   }
+  //
+  // }
+
+  void validation(LoginTemplate loginTemplate) {
     if (email.text.trim().isEmpty ||
         email.text.trim() == null && password.text.trim().isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("All Field is Empty")));
@@ -88,12 +120,29 @@ class _LogInPageState extends State<LogInPage> {
       setState(() {
         loading = true;
       });
-      loginAuth();
+      loginTemplate.login(context, email.text, password.text, (bool isSuccessful) {
+        setState(() {
+          loading = false;
+        });
+
+        if (isSuccessful) {
+          // Handle successful login
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Login successful")));
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
+        } else {
+          // Handle login failure
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Login failed. Check your credentials.")));
+          }
+          });
 
     }
   }
   @override
   Widget build(BuildContext context){
+    FirebaseLogin firebaseLogin = FirebaseLogin(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -197,7 +246,7 @@ class _LogInPageState extends State<LogInPage> {
                 //   context,
                 //   MaterialPageRoute(builder: (context) => HomePage()),
                 // );
-                  validation();
+                  validation(firebaseLogin);
             
                 },
                 style: ElevatedButton.styleFrom(
