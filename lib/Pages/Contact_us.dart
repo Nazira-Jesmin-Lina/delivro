@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'HomePage.dart';
+import 'cart_page.dart';
+
 class ContactUsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,25 +17,79 @@ class ContactUsPage extends StatelessWidget {
   final String defaultEmail = 'nazirajesmin13@gmail.com'; // Replace with your default email address
 
   void sendEmail(BuildContext context) async {
+    print("button pressed");
     final Uri emailUri = Uri(
       scheme: 'mailto',
       path: defaultEmail,
       queryParameters: {'subject': 'Contact Us Inquiry'},
     );
-
-    if (await canLaunchUrl(emailUri)) {
+    print(emailUri);
+    try {
       await launchUrl(emailUri);
-    } else {
-      print('Could not launch email client.');
+    } catch (e) {
+      print('Could not launch email client: $e');
     }
+
+
+
+
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contact Us'),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: const Color.fromARGB(255, 200, 15, 104),
+          ),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
+              ),
+            );
+          },
+        ),
+        title: Align(
+          alignment: Alignment.topCenter,
+          child: Text(
+            "Contact Us",
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontFamily: "Ubuntu",
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        actions:   [
+          Padding(
+            padding: EdgeInsets.all(9.0),
+            child:IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+                color: const Color.fromARGB(255, 200, 15, 104),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartPage(),
+
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -49,6 +106,12 @@ class ContactUsPage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => sendEmail(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 200, 15, 104),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30), // <-- Radius
+                ),
+              ),
               child: Text('Send Email'),
             ),
           ],
@@ -56,4 +119,8 @@ class ContactUsPage extends StatelessWidget {
       ),
     );
   }
+}
+
+void main() {
+  runApp(ContactUsApp());
 }

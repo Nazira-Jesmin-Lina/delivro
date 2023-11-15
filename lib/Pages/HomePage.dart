@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivro/Pages/Contact_us.dart';
 import 'package:delivro/Pages/Order_history.dart';
+import 'package:delivro/Pages/aboutPage.dart';
 import 'package:delivro/Pages/categories.dart';
 import 'package:delivro/Pages/detailPage.dart';
 import 'package:delivro/Pages/profile_page.dart';
@@ -11,6 +13,7 @@ import 'package:delivro/modles/food_modle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../modles/user.dart';
 import 'LogIn_page.dart';
@@ -326,7 +329,7 @@ class _HomePageState extends State<HomePage>{
                     ),
                 ),
 
-                onTap: () {
+                onTap: () async {
                   
                   if (name == 'Profile') {
                     Navigator.push(
@@ -359,10 +362,21 @@ class _HomePageState extends State<HomePage>{
                     
                   }
                   else if (name == 'About') {
-                    
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AboutPage(),
+
+                      ),
+                    );
                   }
-                  else if (name == 'Change') {
-                    
+                  else if (name == 'Contact Us') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>ContactUsPage(),
+                      ),
+                    );
                   }
                   else if (name == 'Log Out') {
 
@@ -370,8 +384,25 @@ class _HomePageState extends State<HomePage>{
                       FirebaseAuth.instance.signOut();
                       print("User logged out");
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Log Out Successfull')));
+                      final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-                      Navigator.push(
+                      prefs.setString('email', "");
+                      prefs.setString('password', "");
+                      prefs.setString('authenticationStrategy', 'emailPass');
+                      String saveemail = prefs.getString('email')!;
+                      String savepassword = prefs.getString('password')!;
+                      print(saveemail);
+                      print(savepassword);
+                      MyProvider provider = Provider.of<MyProvider>(context,listen: false);
+                      SharedPreferences prefss = await SharedPreferences.getInstance();
+                      List<String>? cartData = prefss.getStringList('cartData');
+
+                      if (cartData != null) {
+                        provider.clearCart();
+                        cartData.clear();
+                        await prefs.setStringList('cartData', cartData);
+                      }
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>const LogInPage(),
@@ -464,7 +495,7 @@ class _HomePageState extends State<HomePage>{
                       ),
                   ),
                   currentAccountPicture: CircleAvatar(
-                    backgroundImage: NetworkImage(user.image),
+                    backgroundImage: NetworkImage(user.image?? "default image"),
                     backgroundColor: Colors.white,
                   ),
                   accountName: Text(
@@ -487,7 +518,7 @@ class _HomePageState extends State<HomePage>{
 
                 drawerItem('Profile',Icons.person_2_outlined),
                 drawerItem('Cart',Icons.add_shopping_cart_outlined),
-                drawerItem('Order',Icons.shop_2_outlined),
+                //drawerItem('Order',Icons.shop_2_outlined),
                 drawerItem('About',Icons.info_outline_rounded),
                 const Divider(
                   thickness: 2,
@@ -506,7 +537,7 @@ class _HomePageState extends State<HomePage>{
                   ),
                 ),
 
-                drawerItem('Change',Icons.change_circle_outlined),
+                drawerItem('Contact Us',Icons.contact_mail_outlined),
                 drawerItem('Log Out',Icons.logout_outlined),
 
 
@@ -542,7 +573,7 @@ class _HomePageState extends State<HomePage>{
                   color: const Color.fromARGB(255, 200, 15, 104),
                 ),
                 onPressed: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => CartPage(),
@@ -624,32 +655,32 @@ class _HomePageState extends State<HomePage>{
                 const SizedBox(
                     height: 20,
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'What are you looking for?',
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                    prefixIcon: const Icon(Icons.search_outlined,color: Colors.black,),
-                    filled: true,
-                    fillColor: const Color.fromARGB(255, 230, 228, 228),
-                    border:OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color.fromARGB(255, 59, 12, 229),
-                          strokeAlign: BorderSide.strokeAlignOutside,
-                          style: BorderStyle.solid,
-                          width: 20.0
-                          ),
-                      borderRadius:BorderRadius.circular(20)
-                      ),
-                  ),
-                ),
+                // TextField(
+                //   decoration: InputDecoration(
+                //     hintText: 'What are you looking for?',
+                //     hintStyle: const TextStyle(
+                //       color: Colors.grey,
+                //     ),
+                //     prefixIcon: const Icon(Icons.search_outlined,color: Colors.black,),
+                //     filled: true,
+                //     fillColor: const Color.fromARGB(255, 230, 228, 228),
+                //     border:OutlineInputBorder(
+                //       borderSide: const BorderSide(color: Color.fromARGB(255, 59, 12, 229),
+                //           strokeAlign: BorderSide.strokeAlignOutside,
+                //           style: BorderStyle.solid,
+                //           width: 20.0
+                //           ),
+                //       borderRadius:BorderRadius.circular(20)
+                //       ),
+                //   ),
+                // ),
 
 
 
-
-                 const SizedBox(
-                      height: 40,
-                    ),
+                 //
+                 // const SizedBox(
+                 //      height: 40,
+                 //    ),
 
                 const Align(
                   alignment: Alignment.centerLeft,

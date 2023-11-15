@@ -4,6 +4,7 @@ import 'package:delivro/modles/categories_modle.dart';
 import 'package:delivro/modles/food_categories_modle.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../modles/food_modle.dart';
 
@@ -284,51 +285,53 @@ Future<void> getAllFoodCategories() async {
 
 
 
-// List<FoodCategoriesModle> burgerCategoriesList = [];
-   
-//   Future<void> getBurgerCategoriesList() async {
-//     List<FoodCategoriesModle> newBurgerCategoriesList = [];
-//     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-//         .collection('foodCategories')
-//         .doc('5dBnHYMAABnhG5aGwTqw')
-//         .collection('Burger')
-//         .get();
-//     querySnapshot.docs.forEach((element) {
-//       FoodCategoriesModle burgerCategoriesModle = FoodCategoriesModle(
-//         image: element['image'],
-//         name: element['name'],
-//         price: element['price'],
-//       );
-//       //print(burgerCategoriesModle.name);
-//       newBurgerCategoriesList.add(burgerCategoriesModle);
-//       burgerCategoriesList = newBurgerCategoriesList;
-//     });
-
-    
-//   }
-
-//  get throwBurgerCategoriesList {
-//     return burgerCategoriesList;
-//   }
 
 /////////////add to cart ////////////
   List<CartModle> cartList = [];
   List<CartModle> newCartList = [];
   //late CartModle cartModle;
-  void addToCart({
+  Future<void> addToCart({
     required String image,
     required String name,
     required int price,
     required int quantity,
-}) {
+}) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? cartData = prefs.getStringList('cartData');
+
+    // Initialize cartList with the existing data from SharedPreferences
+    if (cartData != null) {
+      cartList = cartData
+          .map((data) {
+        List<String> values = data.split(',');
+        return CartModle(
+          name: values[0],
+          price: int.parse(values[1]),
+          quantity: int.parse(values[2]),
+          image: values[3],
+        );
+      })
+          .toList();
+    }
     CartModle cartModle = CartModle(
       image: image,
       name: name,
       price: price,
       quantity: quantity,
     );
-    newCartList.add(cartModle);
-    cartList = newCartList;
+
+      cartList.add(cartModle);
+      //cartList = newCartList;
+
+    notifyListeners();
+
+    cartData = cartList
+        .map((item) =>
+    '${item.name},${item.price},${item.quantity},${item.image}')
+        .toList();
+
+    prefs.setStringList('cartData', cartData);
   }
 
   get throwCartList {
@@ -356,6 +359,9 @@ Future<void> getAllFoodCategories() async {
     cartList.clear();
     notifyListeners();
   }
+
+
+
 
 
 }

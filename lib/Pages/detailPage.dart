@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:delivro/Provider/myProvider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../modles/food_categories_modle.dart';
 import 'HomePage.dart';
@@ -20,7 +21,20 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+
   int quantity=1;
+
+  void saveCartData() async {
+    MyProvider provider= Provider.of<MyProvider>(context,listen: false);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> cartData = provider.cartList
+        .map((item) =>
+    '${item.name},${item.price},${item.quantity},${item.image}')
+        .toList();
+
+    prefs.setStringList('cartData', cartData);
+    print(cartData);
+  }
   @override
   Widget build(BuildContext context) {
     List<FoodCategoriesModle> AllCategoriesList=[];
@@ -42,6 +56,7 @@ class _DetailPageState extends State<DetailPage> {
             onTap: (){
               setState(() {
                 if (quantity > 1) quantity--;
+                saveCartData();
               });
             },
             child: Container(
@@ -76,6 +91,7 @@ class _DetailPageState extends State<DetailPage> {
             onTap: (){
               setState(() {
                 quantity++;
+                saveCartData();
               });
             },
             child: Container(
@@ -100,6 +116,7 @@ class _DetailPageState extends State<DetailPage> {
                   name: widget.name,
                   price: widget.price,
                   quantity: quantity,);
+              saveCartData();
 
               showDialog(
                 context: context,
@@ -129,9 +146,9 @@ class _DetailPageState extends State<DetailPage> {
                 msg: "ADD item successfully to your cart",
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.grey, // You can customize this
-                textColor: Colors.white, // You can customize this
-                fontSize: 20, // You can customize this
+                backgroundColor: Colors.pinkAccent,
+                textColor: Colors.white,
+                fontSize: 15,
               );
 
               quantity=1;
@@ -189,7 +206,7 @@ class _DetailPageState extends State<DetailPage> {
               color: const Color.fromARGB(255, 200, 15, 104),
             ),
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => CartPage(),
@@ -293,10 +310,7 @@ class _DetailPageState extends State<DetailPage> {
                         ),
 
 
-                        //
-                        // const SizedBox(
-                        //   height: 20,
-                        // ),
+
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal, // Set the scroll direction to horizontal
                           child: Row(

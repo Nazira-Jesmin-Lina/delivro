@@ -7,12 +7,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class CartPage extends StatefulWidget{
   @override
   State<CartPage> createState() => _CartPageState();
+
 }
 
 class _CartPageState extends State<CartPage> {
+  void saveCartData() async {
+    MyProvider provider= Provider.of<MyProvider>(context,listen: false);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> cartData = provider.cartList
+        .map((item) =>
+    '${item.name},${item.price},${item.quantity},${item.image}')
+        .toList();
+
+    prefs.setStringList('cartData', cartData);
+    print(cartData);
+  }
   @override
   Widget cartItem({
     required String image,
@@ -119,6 +132,7 @@ class _CartPageState extends State<CartPage> {
                         IconButton(onPressed: (){
                           setState(() {
                             if(quantity>1) quantityDecrease();
+                            saveCartData();
                           });
                         },
                           icon: Icon(Icons.remove_circle_outline),
@@ -135,6 +149,7 @@ class _CartPageState extends State<CartPage> {
                           //print(quantity);
                           setState(() {
                            quantityIncrease();
+                           saveCartData();
                           }
                           );
                           //print(quantity);
@@ -190,13 +205,22 @@ class _CartPageState extends State<CartPage> {
         msg: "Checkout Successful",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.grey, // You can customize this
-        textColor: Colors.white, // You can customize this
-        fontSize: 20, // You can customize this
+        backgroundColor: Colors.pinkAccent,
+        textColor: Colors.white,
+        fontSize: 15,
       );
 
       // Clear the cart list after a successful checkout
-      provider.clearCart();
+      provider = Provider.of<MyProvider>(context,listen: false);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<String>? cartData = prefs.getStringList('cartData');
+
+      if (cartData != null) {
+        provider.clearCart();
+        cartData.clear();
+        await prefs.setStringList('cartData', cartData);
+      }
+
 
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
@@ -299,23 +323,31 @@ class _CartPageState extends State<CartPage> {
           itemBuilder: (ctx,index){
             provider.getDeleteIndex(index);
            // print(provider.cartList[index].name);
+
             return cartItem(
                 image: provider.cartList[index].image,
                 name: provider.cartList[index].name,
                 price: provider.cartList[index].price,
 
+
                 ontap: (){
                   provider.getDeleteIndex(index);
                   provider.delete();
+
                 },
                 quantityDecrease: (){
                   provider.cartList[index].quantity--;
+
                 },
 
               quantityIncrease: (){
                 provider.cartList[index].quantity++;
+
               },
-                quantity: provider.cartList[index].quantity,);
+                quantity: provider.cartList[index].quantity,
+
+            );
+
           },
 
       ),

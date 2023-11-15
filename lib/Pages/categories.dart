@@ -50,7 +50,7 @@ class Categories extends StatelessWidget{
                 color: const Color.fromARGB(255, 200, 15, 104),
               ),
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => CartPage(),

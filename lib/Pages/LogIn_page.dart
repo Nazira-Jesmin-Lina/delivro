@@ -1,9 +1,12 @@
 
 import 'package:delivro/Pages/forget_password.dart';
 import 'package:delivro/Pages/widget/TextField.dart';
+import 'package:delivro/Provider/myProvider.dart';
 import 'package:delivro/modles/LogIn_template.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'SignUp.dart';
 import 'HomePage.dart';
 
@@ -37,69 +40,10 @@ class _LogInPageState extends State<LogInPage> {
   final scaffoldMessengerKey=GlobalKey<ScaffoldMessengerState>();
 
 
-  // Future loginAuth() async {
-  //   LoginTemplate loginTemplate = FirebaseLogin(context);
-  //
-  //   setState(() {
-  //     loading = true;
-  //   });
-  //
-  //   loginTemplate.login(context, email.text, password.text, (bool isSuccessful) {
-  //     setState(() {
-  //       loading = false;
-  //     });
-  //
-  //     if (isSuccessful) {
-  //       // Handle successful login
-  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Successful')));
-  //       Navigator.pushReplacement(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => const HomePage()),
-  //       );
-  //     } else {
-  //       // Handle login failure
-  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Failed')));
-  //     }
-  //   });
-  // }
 
 
+  void validation(LoginTemplate loginTemplate) async {
 
-
-  // Future loginAuth() async{
-  //
-  //
-  //
-  //   try {
-  //     final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //       email: email.text,
-  //       password: password.text
-  //     );
-  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Successfull')));
-  //     Navigator.pushReplacement(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => const HomePage()),
-  //         );
-  //   } on FirebaseAuthException catch (e) {
-  //     print('hhhhhhhh');
-  //     if (e.code == 'user-not-found') {
-  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No user found for that email.')));
-  //
-  //     } else if (e.code == 'wrong-password') {
-  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Wrong password provided for that user.')));
-  //     }
-  //     else
-  //     {
-  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Invalid Credentials.')));
-  //     }
-  //     setState(() {
-  //       loading=false;
-  //     });
-  //   }
-  //
-  // }
-
-  void validation(LoginTemplate loginTemplate) {
     if (email.text.trim().isEmpty ||
         email.text.trim() == null && password.text.trim().isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("All Field is Empty")));
@@ -120,12 +64,22 @@ class _LogInPageState extends State<LogInPage> {
       setState(() {
         loading = true;
       });
-      loginTemplate.login(context, email.text, password.text, (bool isSuccessful) {
+      loginTemplate.login(context, email.text, password.text, (bool isSuccessful) async {
         setState(() {
           loading = false;
         });
 
         if (isSuccessful) {
+
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+          prefs.setString('email', email.text);
+          prefs.setString('password', password.text);
+          prefs.setString('authenticationStrategy', 'emailPass');
+          String saveemail = prefs.getString('email')!;
+          String savepassword = prefs.getString('password')!;
+          print(saveemail);
+          print(savepassword);
           // Handle successful login
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Login successful")));
           Navigator.pushReplacement(
@@ -242,10 +196,7 @@ class _LogInPageState extends State<LogInPage> {
               width: 100,
               child: ElevatedButton(
                 onPressed: () {
-                //   Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => HomePage()),
-                // );
+
                   validation(firebaseLogin);
             
                 },

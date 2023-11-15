@@ -45,7 +45,7 @@ class ForgetPasswordPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image.asset(
-              'Images/reset.png', // Add an image asset
+              'Images/reset.png',
               width: 200,
               height: 200,
             ),
@@ -56,7 +56,7 @@ class ForgetPasswordPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             TextFormField(
-              controller: emailController, // Step 2 ekhane input ta nicche
+              controller: emailController,
               decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
@@ -65,7 +65,7 @@ class ForgetPasswordPage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Step 3: Log the text entered in the TextFormField
+
                 try {
                       FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.toString());
                       print("Password reset email sent");
@@ -74,13 +74,19 @@ class ForgetPasswordPage extends StatelessWidget {
                     }
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Password Reset Email Sent Succesfully.')));
 
-                     Navigator.push(
+                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) =>const LogInPage(),
                       ),
                     );
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 200, 15, 104),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30), // <-- Radius
+                ),
+              ),
               child: Text('Reset Password'),
             ),
           ],
