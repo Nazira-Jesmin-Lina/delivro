@@ -16,6 +16,17 @@ class ContactUsApp extends StatelessWidget {
 class ContactUsPage extends StatelessWidget {
   final String defaultEmail = 'nazirajesmin13@gmail.com'; // Replace with your default email address
 
+  // Create a private static instance variable
+  static final ContactUsPage _instance = ContactUsPage._internal();
+
+  // Private constructor
+  ContactUsPage._internal();
+
+  // Public factory method to get the instance
+  factory ContactUsPage() {
+    return _instance;
+  }
+
   void sendEmail(BuildContext context) async {
     print("button pressed");
     final Uri emailUri = Uri(
@@ -29,11 +40,6 @@ class ContactUsPage extends StatelessWidget {
     } catch (e) {
       print('Could not launch email client: $e');
     }
-
-
-
-
-
   }
 
   @override
@@ -68,10 +74,10 @@ class ContactUsPage extends StatelessWidget {
             ),
           ),
         ),
-        actions:   [
+        actions: [
           Padding(
             padding: EdgeInsets.all(9.0),
-            child:IconButton(
+            child: IconButton(
               icon: Icon(
                 Icons.shopping_cart,
                 color: const Color.fromARGB(255, 200, 15, 104),
@@ -81,7 +87,6 @@ class ContactUsPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => CartPage(),
-
                   ),
                 );
               },
@@ -89,7 +94,6 @@ class ContactUsPage extends StatelessWidget {
           ),
         ],
       ),
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -121,6 +125,4 @@ class ContactUsPage extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(ContactUsApp());
-}
+

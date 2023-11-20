@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivro/Pages/Contact_us.dart';
-import 'package:delivro/Pages/Order_history.dart';
 import 'package:delivro/Pages/aboutPage.dart';
 import 'package:delivro/Pages/categories.dart';
 import 'package:delivro/Pages/detailPage.dart';
@@ -351,16 +350,16 @@ class _HomePageState extends State<HomePage>{
                     );
 
                     }
-                  else if (name == 'Order') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => OrderHistoryPage(),
-
-                      ),
-                    );
-                    
-                  }
+                  // else if (name == 'Order') {
+                  //   Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => OrderHistoryPage(),
+                  //
+                  //     ),
+                  //   );
+                  //
+                  // }
                   else if (name == 'About') {
                     Navigator.push(
                       context,

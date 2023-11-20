@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
-
 import 'HomePage.dart';
 import 'cart_page.dart';
 
 class AboutPage extends StatelessWidget {
+  // Create a private static instance variable
+  static final AboutPage _instance = AboutPage._internal();
+
+  // Private constructor
+  AboutPage._internal();
+
+  // Public factory method to get the instance
+  factory AboutPage() {
+    return _instance;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,10 +46,10 @@ class AboutPage extends StatelessWidget {
             ),
           ),
         ),
-        actions:   [
+        actions: [
           Padding(
             padding: EdgeInsets.all(9.0),
-            child:IconButton(
+            child: IconButton(
               icon: Icon(
                 Icons.shopping_cart,
                 color: const Color.fromARGB(255, 200, 15, 104),
@@ -49,7 +59,6 @@ class AboutPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => CartPage(),
-
                   ),
                 );
               },
@@ -83,20 +92,18 @@ class AboutPage extends StatelessWidget {
                 Text(
                   'Your Deliver Bro is here for delivering your Tasty Meals',
                   style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.black,
-                      fontFamily: 'Pacifico'
-                  ),
+                      fontSize: 18.0,
+                      color: Colors.black,
+                      fontFamily: 'Pacifico'),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 20.0),
                 Text(
                   'Delivro is your go-to food app, designed to make your food ordering experience easy and delightful. With a variety of delicious dishes, discounts, and personalized recommendations, Delivro ensures that your meals are not only tasty but also delivered with care. Enjoy the convenience of ordering your favorite food with just a few taps!',
                   style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.black,
-                    fontFamily: 'Pacifico'
-                  ),
+                      fontSize: 20.0,
+                      color: Colors.black,
+                      fontFamily: 'Pacifico'),
                   textAlign: TextAlign.center,
                 ),
               ],

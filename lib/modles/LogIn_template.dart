@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import '../Pages/HomePage.dart';
 
 abstract class LoginTemplate {
-  BuildContext context; // Add context variable
+  BuildContext context;
 
-  LoginTemplate(this.context); // Constructor to initialize context
+  LoginTemplate(this.context);
 
   Future login(BuildContext context,String email, String password,Function(bool) onLoginComplete);
 }
