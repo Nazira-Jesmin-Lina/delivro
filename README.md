@@ -5,6 +5,11 @@ Delivro is an online food delivery application designed with a vibrant and user-
 # Overview of Delivro App
 ![image](https://github.com/Nazira-Jesmin-Lina/delivro/blob/main/Images/Untitled%20design.png)
 
+# Technical Overview
+## Framework :Flutter
+## Language :Dart
+## Database :Firebase
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
