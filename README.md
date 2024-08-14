@@ -1,6 +1,9 @@
 # delivro
 
-A new Flutter project.
+Delivro is an online food delivery application designed with a vibrant and user-friendly interface. It allows users to browse through a variety of food categories such as pizza, burgers, pasta, and desserts, with detailed product listings and easy navigation. The app features a seamless order placement process, including "Add to Cart" and checkout functionality. It also offers personalized recommendations, a user profile for managing personal information, and an order tracking system, providing a comprehensive solution for both customers and restaurants.
+
+# Overview of Delivro App
+![image](https://github.com/Nazira-Jesmin-Lina/delivro/blob/main/Images/Untitled%20design.png)
 
 ## Getting Started
 
